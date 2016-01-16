@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="header-bar">
+        <div class="message-bar">
+        	<div>{{message}}</div>
+        	<div>
+        		<div class="player-1-turn" ng-show="activePlayer == 1">It's your turn!</div>
+                <div class="player-2-turn" ng-show="activePlayer == 2">I'm making a move...</div>
+        	</div>
+        </div>
+        <div class="button-bar">
+            <input class="reset-button" type="button" ng-click="resetGame()" value="New Game"/>
+        </div>
+    </div>
+    <div>
+    	<table>
+            <thead>
+                <tr>
+                    <th ng-repeat="colNo in colIndices">
+                        <input class="drop-button" ng-disabled="activePlayer == null || activePlayer != humanPlayer" type="button" ng-click="makeMove(activePlayer, colNo)" value="drop!" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="rowNo in rowIndices">
+                    <td ng-repeat="colNo in colIndices">
+                        <div class="disc" ng-class="{ 'player-1-disc' : grid[colNo][rowNo] == 1, 'player-2-disc': grid[colNo][rowNo] == 2 }"></div>
+                    </td>
+                </tr>
+            </tbody>
+    	</table>
+    </div>
+</div>

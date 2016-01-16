@@ -1,0 +1,33 @@
+{
+  "name": "4inarow",
+  "version": "1.0.0",
+  "description": "Angular version of the four in a row game.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogood/4inarow.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rogood/4inarow/issues"
+  },
+  "homepage": "https://github.com/rogood/4inarow#readme",
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "jquery": "~2.2.0",
+    "bootstrap": "~3.3.6",
+    "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.8.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-uglify": "^1.5.1",
+    "gulp-connect": "^2.3.1",
+    "gulp-jshint": "^2.0.0",
+    "jshint-stylish": "^2.1.0"
+  }
+}
