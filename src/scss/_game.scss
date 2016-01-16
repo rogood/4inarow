@@ -13,10 +13,6 @@ table#game-grid{
 	td, th{
 		border: 1px solid #ddd;
 	}
-	td{
-		height:64px; /* default height */
-		width:64px; /* default width */
-	}
 }
 
 .disc {
@@ -35,7 +31,7 @@ table#game-grid{
 
 .drop-button{
 	width:100%;
-	height: 32px;
+	height: 62px;
 	color:#fff;
 	background-color:$drop-button-color;
 	border-style:none;

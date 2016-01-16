@@ -6782,11 +6782,6 @@ table#game-grid {
   background-color: #fff; }
   table#game-grid td, table#game-grid th {
     border: 1px solid #ddd; }
-  table#game-grid td {
-    height: 64px;
-    /* default height */
-    width: 64px;
-    /* default width */ }
 
 .disc {
   -webkit-border-radius: 50%;
@@ -6806,7 +6801,7 @@ table#game-grid {
 
 .drop-button {
   width: 100%;
-  height: 32px;
+  height: 62px;
   color: #fff;
   background-color: #A4D4B4;
   border-style: none; }

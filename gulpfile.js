@@ -61,7 +61,7 @@ gulp.task('connect', function () {
   });
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['default'], function() {
   gulp.watch('src/js/**/*.js', ['jshint', 'bundle-js']);
   gulp.watch('src/scss/**/*.scss', ['bundle-css']);
   gulp.watch('src/templates/**/*.html', ['bundle-js']);

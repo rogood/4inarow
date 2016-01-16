@@ -47,17 +47,18 @@ angular.module('app')
 	
 	function resizeGame(){
 		$timeout(function(){
-			var gameContainer = document.getElementById("game-container"),
-				gridElem = document.getElementById("game-grid"),
-				cellElems = gridElem.getElementsByTagName('td'),
+			var gridBodyElem = document.getElementById("game-grid").getElementsByTagName('tbody')[0],
+				cellElems = gridBodyElem.getElementsByTagName('td'),
+				containerWidth = window.innerWidth - 20,
+				containerHeight = window.innerHeight - gridBodyElem.getBoundingClientRect().top - 20,
 				cellSize,
 				i;
 			
-			if(gameContainer.clientWidth < gameContainer.clientHeight){
-				cellSize = gameContainer.clientWidth / colCount;		
+			if(containerWidth < containerHeight){
+				cellSize = containerWidth / colCount;		
 			}
 			else{
-				cellSize = gameContainer.clientHeight / rowCount;
+				cellSize = containerHeight / rowCount;
 			}
 	
 			for (i = 0; i < cellElems.length; i++){
