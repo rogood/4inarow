@@ -32,6 +32,13 @@ gulp.task('bundle-css', function() {
 
 });
 
+gulp.task('build-templates', function() {
+    return gulp
+        .src('./src/templates/**/*.html')
+        .pipe(templatecache({standalone: true}))
+        .pipe(gulp.dest('./build/js'));
+});
+
 gulp.task('bundle-js', function() {
   return gulp.src([
     './node_modules/angular/angular.js',
@@ -48,16 +55,9 @@ gulp.task('bundle-js', function() {
 
 });
 
-gulp.task('build-templates', function() {
-    return gulp
-        .src('./src/templates/**/*.html')
-        .pipe(templatecache({standalone: true}))
-        .pipe(gulp.dest('./build/js'));
-});
-
 gulp.task('connect', function () {
   return connect.server({
-    root: '/',
+    root: '',
     port: 8888
   });
 });
