@@ -6,7 +6,7 @@ var gulp   = require('gulp'),
     uglify = require('gulp-uglify'),
     templatecache = require('gulp-angular-templatecache');
 
-gulp.task('default', ['build-css', 'bundle-css', 'build-templates', 'bundle-js']);
+gulp.task('default', ['build-css', 'bundle-css', 'bundle-js']);
 
 gulp.task('jshint', function() {
   return gulp.src('./src/js/**/*.js')
@@ -24,8 +24,7 @@ gulp.task('bundle-css', function() {
 
   return gulp.src([
     './node_modules/bootstrap/dist/css/bootstrap.css',
-    './build/css/app.css',
-    './build/css/game.css'
+    './build/css/base.css'
   ])
   .pipe(gulpconcat('bundle.css'))
   .pipe(gulp.dest('./dist'));
@@ -39,7 +38,7 @@ gulp.task('build-templates', function() {
         .pipe(gulp.dest('./build/js'));
 });
 
-gulp.task('bundle-js', function() {
+gulp.task('bundle-js', ['build-templates'], function() {
   return gulp.src([
     './node_modules/angular/angular.js',
     './node_modules/angular-ui-router/release/angular-ui-router.js',
@@ -63,7 +62,7 @@ gulp.task('connect', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('js/**/*.js', ['jshint', 'bundle-js']);
-  gulp.watch('scss/**/*.scss', ['build-css', 'bundle-css']);
-  gulp.watch('templates/**/*.html', ['build-templates', 'bundle-js']);
+  gulp.watch('src/js/**/*.js', ['jshint', 'bundle-js']);
+  gulp.watch('src/scss/**/*.scss', ['build-css', 'bundle-css']);
+  gulp.watch('src/templates/**/*.html', ['bundle-js']);
 });

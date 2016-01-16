@@ -4,7 +4,7 @@ angular.module('app')
 	var colCount = 7;
 	var rowCount = 6;
 	var winningCount = 4;
-
+	
 	$scope.makeMove = makeMove;
 	$scope.resetGame = resetGame;
 
@@ -25,6 +25,7 @@ angular.module('app')
 	$scope.activePlayer = 1;
 	$scope.message = "";
 
+	resizeGame();
 	resetGrid();
 
 	function resetGame()
@@ -42,6 +43,29 @@ angular.module('app')
 	    for (var i = 0; i < colCount; i++) {
 	        $scope.grid.push([]);
 	    }
+	}
+	
+	function resizeGame(){
+		$timeout(function(){
+			var gameContainer = document.getElementById("game-container"),
+				gridElem = document.getElementById("game-grid"),
+				cellElems = gridElem.getElementsByTagName('td'),
+				cellSize,
+				i;
+			
+			if(gameContainer.clientWidth < gameContainer.clientHeight){
+				cellSize = gameContainer.clientWidth / colCount;		
+			}
+			else{
+				cellSize = gameContainer.clientHeight / rowCount;
+			}
+	
+			for (i = 0; i < cellElems.length; i++){
+				cellElems[i].style.width = 
+					cellElems[i].style.height = 
+						cellSize + "px";
+			}
+		});
 	}
 
 	function makeMove(playerId, col)

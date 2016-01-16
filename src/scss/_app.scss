@@ -1,0 +1,23 @@
+$navbar-color:#3B1C32;
+$navbar-brand-color:#fff;
+
+html, body {
+	height: 100%;
+}
+body{
+	margin: 0 auto;
+	font-family: 'Nunito', 'Georgia', sans-serif;
+	background-color:$page-color;
+}
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Nunito', 'Georgia', sans-serif;
+}
+
+.navbar{
+	background-color:$navbar-color;
+	.navbar-brand{
+		font-family: 'Nunito', 'Georgia', cursive;
+		font-size: 28px;
+	 	color:$navbar-brand-color;
+	}
+}
