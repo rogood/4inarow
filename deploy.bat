@@ -13,6 +13,8 @@ git rebase master
 
 git push origin gh-pages
 
+git stash
+
 git checkout master
 
 PAUSE
