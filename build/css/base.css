@@ -4,7 +4,7 @@ html, body {
 body {
   margin: 0 auto;
   font-family: 'Nunito', 'Georgia', sans-serif;
-  background-color: #EDAE49; }
+  background-color: #fff; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Nunito', 'Georgia', sans-serif; }
@@ -54,8 +54,7 @@ table#game-grid {
     background-color: #bcbcbc; }
 
 .info-bar {
-  background-color: #fff;
-  border-style: none; }
+  background-color: #fff; }
 
 .message-bar {
   color: #5CA4A9;

@@ -1,4 +1,4 @@
-$page-color:#EDAE49;
+$page-color:#fff;
 
 @mixin vendorize($name, $argument) {
   -webkit-#{$name}: #{$argument};

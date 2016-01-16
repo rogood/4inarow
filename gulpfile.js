@@ -6,7 +6,7 @@ var gulp   = require('gulp'),
     uglify = require('gulp-uglify'),
     templatecache = require('gulp-angular-templatecache');
 
-gulp.task('default', ['build-css', 'bundle-css', 'bundle-js']);
+gulp.task('default', ['bundle-css', 'bundle-js']);
 
 gulp.task('jshint', function() {
   return gulp.src('./src/js/**/*.js')
@@ -20,7 +20,7 @@ gulp.task('build-css', function() {
     .pipe(gulp.dest('./build/css'));
 });
 
-gulp.task('bundle-css', function() {
+gulp.task('bundle-css', ['build-css'], function() {
 
   return gulp.src([
     './node_modules/bootstrap/dist/css/bootstrap.css',
@@ -63,6 +63,6 @@ gulp.task('connect', function () {
 
 gulp.task('watch', function() {
   gulp.watch('src/js/**/*.js', ['jshint', 'bundle-js']);
-  gulp.watch('src/scss/**/*.scss', ['build-css', 'bundle-css']);
+  gulp.watch('src/scss/**/*.scss', ['bundle-css']);
   gulp.watch('src/templates/**/*.html', ['bundle-js']);
 });
