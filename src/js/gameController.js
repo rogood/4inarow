@@ -49,8 +49,8 @@ angular.module('app')
 		$timeout(function(){
 			var gridBodyElem = document.getElementById("game-grid").getElementsByTagName('tbody')[0],
 				cellElems = gridBodyElem.getElementsByTagName('td'),
-				containerWidth = window.innerWidth - 20,
-				containerHeight = window.innerHeight - gridBodyElem.getBoundingClientRect().top - 20,
+				containerWidth = document.body.clientWidth - 20,
+				containerHeight = document.body.clientHeight - gridBodyElem.getBoundingClientRect().top - 20,
 				cellSize,
 				i;
 			

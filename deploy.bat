@@ -15,3 +15,5 @@ git push origin gh-pages
 
 git checkout master
 
+PAUSE
+
