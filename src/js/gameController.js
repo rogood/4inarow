@@ -1,50 +1,55 @@
 angular.module('app')
-.controller('GameController', ['$scope', '$timeout', function($scope, $timeout)
+.controller('GameController', ['$scope', '$timeout', 'gameValidator', function($scope, $timeout, gameValidator)
 {
-	var colCount = 7;
-	var rowCount = 6;
-	var winningCount = 4;
+	var colCount = 7,
+		rowCount = 6,
+		winningCount = 4;
+		
+	init();
 	
-	$scope.makeMove = makeMove;
-	$scope.resetGame = resetGame;
+	function init() {
+		
+		// Assign scope functions
+		$scope.makeMove = makeMove;
+		$scope.resetGame = resetGame;
 
-	$scope.colIndices = [];
-	$scope.rowIndices = [];
-
-	for (var i = colCount - 1; i >= 0; i--) {
-		$scope.colIndices.unshift(i);
+		// Initialise scope variables
+		$scope.colIndices = [];
+		$scope.rowIndices = [];
+		$scope.humanPlayer = 1;
+		
+		for (var i = colCount - 1; i >= 0; i--) {
+			$scope.colIndices.unshift(i);
+		}
+	
+		for (var j = rowCount - 1; j >= 0; j--) {
+			$scope.rowIndices.push(j);
+		}
+		
+		// Initialise the game
+		gameValidator.init(colCount, rowCount, winningCount);
+		resetGame();
+		resizeGame();
 	}
-
-	for (var j = rowCount - 1; j >= 0; j--) {
-		$scope.rowIndices.push(j);
-	}
-
-	$scope.grid = [];
-	$scope.colChoice = null;
-	$scope.humanPlayer = 1;
-	$scope.activePlayer = 1;
-	$scope.message = "";
-
-	resizeGame();
-	resetGrid();
 
 	function resetGame()
 	{
-	    resetGrid();
-	    $scope.colChoice = null;
-	    $scope.activePlayer = 1;
-	    $scope.message = "";
-	}
-
-	function resetGrid()
-	{
+		// reset grid
 	    $scope.grid = [];
-
 	    for (var i = 0; i < colCount; i++) {
 	        $scope.grid.push([]);
 	    }
+		
+		// reset other attributes
+	    $scope.colChoice = null;
+	    $scope.message = {
+			cssClass: null,
+			text: null
+		};
+		setCurrentPlayer(1);
 	}
 	
+	// This resizes the grid so that is appears as large as possible while still keeping square cells.
 	function resizeGame(){
 		$timeout(function(){
 			var gridBodyElem = document.getElementById("game-grid").getElementsByTagName('tbody')[0],
@@ -71,273 +76,115 @@ angular.module('app')
 
 	function makeMove(playerId, col)
 	{
-		if(isValidMove(playerId, col))
+		if(gameValidator.isValidMove($scope.grid, $scope.currentPlayer, playerId, col))
 		{
 			$scope.grid[col].push(playerId);
 
-			if(checkTie())
+			if(gameValidator.checkTie($scope.grid))
 			{
-				$scope.message = "No more moves can be made. It's a tie";
-				$scope.colChoice = null;
+				$scope.message = {
+					text: "No more moves can be made. It's a tie",
+					cssClass: ""
+				};
+				setCurrentPlayer(null);
 			}
-			else if(checkWinner(playerId))
+			else if(gameValidator.checkWinner($scope.grid, playerId))
 			{
-				if(playerId === 1){
-					$scope.message = "You win!";
+				if(playerId === $scope.humanPlayer){
+					$scope.message = {
+						text: "You win!",
+						cssClass: "message-win"
+					}
 				}
-				else{
-					$scope.message = "You lose";
+				else {
+					$scope.message = {
+						text: "You lose",
+						cssClass: "message-lose"
+					}
 				}
-
-				$scope.activePlayer = null;
+						
+				setCurrentPlayer(null);
 			}
 			else
 			{
-				changeActivePlayer();
-				$scope.message = "";
-				$scope.colChoice = null;
+				toggleCurrentPlayer();
 			}
+			
+			// The move was made
+			return true;
 		}
 		else
 		{
-			$scope.message = "Cannot make move";
+			$scope.message = {
+				text: "Cannot make move",
+				cssClass: ""
+			};
 			$scope.colChoice = null;
-		}
-	}
-
-	function automatedMove(playerId)
-	{
-		function getRandomInt(min, max)
-		{
-		    return Math.floor(Math.random() * (max - min + 1)) + min;
-		}
-
-		var col = getRandomInt(0, colCount - 1);
-
-		makeMove(playerId, col);
-
-		if($scope.message == "Cannot make move")
-		{
-			automatedMove(playerId);
-		}
-	}
-
-	// Move Validation
-	function isValidMove(playerId, col)
-	{
-		function isActivePlayer()
-		{
-			return playerId !== null && playerId == $scope.activePlayer;
-		}
-
-		function isValidCol()
-		{
-			return col > -1 && col < colCount;
-		}
-
-		function isColNotFull()
-		{
-			return $scope.grid[col].length < rowCount;
-		}
-
-		return isActivePlayer() && isValidCol() && isColNotFull();
-	}
-
-	function changeActivePlayer()
-	{
-		if($scope.activePlayer == 1)
-		{
-			$scope.activePlayer = 2;
-
-			$timeout(function()
-			{
-				automatedMove(2);
-			},
-			1000);
-		}
-		else if($scope.activePlayer == 2)
-		{
-			$scope.activePlayer = 1;
-		}
-	}
-
-	// Check full grid where there is no winner
-
-	function checkTie()
-	{
-		var allFull = true;
-
-		for (var i = 0; i < rowCount; i++) {
-			allFull = allFull && $scope.grid[i].length >= rowCount;
-		}
-
-		return allFull;
-	}
-
-	// Check if move is a winning one
-	function checkWinner(playerId)
-	{
-		function checkHorizontal()
-		{
-			for(var i = 0; i < rowCount; i++)
-			{
-				var playerCount = 0;
-				for(var j = 0; j < colCount; j++)
-				{
-					if($scope.grid[j] && $scope.grid[j][i] === playerId)
-					{
-						playerCount++;
-						if(playerCount === winningCount){
-							return true;
-						}
-					}
-					else
-					{
-						playerCount = 0;
-					}
-				}
-			}
-		}
-
-		function checkVertical()
-		{
-			for(var i = 0; i < colCount; i++)
-			{
-				var playerCount = 0;
-				for(var j = 0; j < $scope.grid[i].length; j++)
-				{
-					if($scope.grid[i][j] === playerId)
-					{
-						playerCount++;
-						if(playerCount === winningCount)
-						{
-							return true;
-						}
-					}
-					else
-					{
-						playerCount = 0;
-					}
-				}
-			}
-
+			
+			// The move was not made
 			return false;
 		}
-
-		function checkDiagonalSWtoNE()
-		{
-			var currCol, currRow, playerCount;
-
-			for(var r = 0; r < rowCount; r++)
-			{
-				currCol = 0;
-				currRow = r;
-				playerCount = 0;
-
-				while(currCol < colCount && currRow < rowCount)
-				{
-					if($scope.grid[currCol] && $scope.grid[currCol][currRow] === playerId)
-					{
-						playerCount++;
-						if(playerCount === winningCount){
-							return true;
-						}
-					}
-					else
-					{
-						playerCount = 0;
-					}
-
-					currRow++;
-					currCol++;
-				}
-			}
-
-			for(var c = 0; c < colCount; c++)
-			{
-				currCol = c;
-				currRow = 0;
-				playerCount = 0;
-
-				while(currCol < colCount && currRow < rowCount)
-				{
-					if($scope.grid[currCol] && $scope.grid[currCol][currRow] === playerId)
-					{
-						playerCount++;
-						if(playerCount === winningCount){
-							return true;
-						}
-					}
-					else
-					{
-						playerCount = 0;
-					}
-
-					currRow++;
-					currCol++;
-				}
-			}
-
-			return false;
-		}
-
-		function checkDiagonalSEtoNW()
-		{
-			var currCol, currRow, playerCount;
-
-			for(var c = 0; c < colCount; c++)
-			{
-				currCol = c;
-				currRow = 0;
-				playerCount = 0;
-
-				while(currCol >= 0 && currRow < rowCount)
-				{
-					if($scope.grid[currCol] && $scope.grid[currCol][currRow] === playerId)
-					{
-						playerCount++;
-						if(playerCount === winningCount){
-							return true;
-						}
-					}
-					else
-					{
-						playerCount = 0;
-					}
-
-					currRow++;
-					currCol--;
-				}
-			}
-
-			for(var r = 0; r < rowCount; r++)
-			{
-				currCol = colCount - 1;
-				currRow = r;
-				playerCount = 0;
-
-				while(currCol >= 0 && currRow < rowCount)
-				{
-					if($scope.grid[currCol] && $scope.grid[currCol][currRow] === playerId)
-					{
-						playerCount++;
-						if(playerCount === winningCount){
-							return true;
-						}
-					}
-					else
-					{
-						playerCount = 0;
-					}
-
-					currRow++;
-					currCol--;
-				}
-			}
-
-			return false;
-		}
-
-		return checkHorizontal() || checkVertical() || checkDiagonalSWtoNE() || checkDiagonalSEtoNW();
 	}
+
+	function makeAutomatedMove(playerId)
+	{
+		var col = calculateMove();
+		
+		if(!makeMove(playerId, col))
+		{
+			makeAutomatedMove(playerId);
+		}
+	}
+	
+	// This function is for now just a random number generator.
+	// This is the place to insert more intelligent logic later on.
+	function calculateMove()
+	{
+		var min = 0;
+		var max = colCount - 1;
+		
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	function toggleCurrentPlayer()
+	{
+		if($scope.currentPlayer === 1)
+		{
+			setCurrentPlayer(2);
+		}
+		else if($scope.currentPlayer === 2)
+		{
+			setCurrentPlayer(1);
+		}
+	}
+	
+	function setCurrentPlayer(playerId){
+		
+		$scope.colChoice = null;
+				
+		if(playerId > 0) {
+			$scope.currentPlayer = playerId;	
+			$scope.message = {
+				cssClass: "player-" + playerId + "-turn"
+			}
+			
+			if($scope.humanPlayer === playerId)
+			{
+				$scope.message.text = "It's your turn!";			
+			}
+			else
+			{
+				$scope.message.text = "I'm making a move...";
+				$timeout(function()
+				{
+					makeAutomatedMove(playerId);
+				},
+				1000);
+			}
+		}
+		else {
+			$scope.currentPlayer = null;
+		}			
+	}
+		
 }]);

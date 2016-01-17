@@ -9,11 +9,11 @@ git push origin master
 
 git checkout gh-pages
 
+git stash
+
 git rebase master
 
-git push origin gh-pages
-
-git stash
+git push origin gh-pages -f
 
 git checkout master
 

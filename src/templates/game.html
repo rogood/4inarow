@@ -2,10 +2,8 @@
     <div class="info-bar well row">
         <div col="col-xs-12">
             <input class="reset-button btn btn-lg" type="button" ng-click="resetGame()" value="New Game"/>
-            <span class="message-bar">
-                <span>{{message}}</span>
-                <span class="player-1-turn" ng-show="activePlayer == 1">It's your turn!</span>
-                <span class="player-2-turn" ng-show="activePlayer == 2">I'm making a move...</span>
+            <span class="message-bar {{message.cssClass}}">
+                <span>{{message.text}}</span>
             </span>
         </div>
     </div>
@@ -15,14 +13,20 @@
                 <thead>
                     <tr>
                         <th ng-repeat="colNo in colIndices">
-                            <input class="drop-button" ng-disabled="activePlayer == null || activePlayer != humanPlayer" type="button" ng-click="makeMove(activePlayer, colNo)" value="drop!" />
+                            <input class="drop-button" 
+                                ng-disabled="!currentPlayer || currentPlayer !== humanPlayer" 
+                                type="button" 
+                                ng-click="makeMove(currentPlayer, colNo)" 
+                                value="drop!" />
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="rowNo in rowIndices">
                         <td ng-repeat="colNo in colIndices">
-                            <div class="disc" ng-class="{ 'player-1-disc' : grid[colNo][rowNo] == 1, 'player-2-disc': grid[colNo][rowNo] == 2 }"></div>
+                            <div class="disc" 
+                                ng-class="{ 'player-1-disc' : grid[colNo][rowNo] === 1, 'player-2-disc': grid[colNo][rowNo] === 2 }">
+                            </div>
                         </td>
                     </tr>
                 </tbody>
