@@ -21,7 +21,8 @@ h1, h2, h3, h4, h5, h6 {
 
 table#game-grid {
   margin: 0 auto;
-  background-color: #fff; }
+  background-color: #fff;
+  overflow: hidden; }
   table#game-grid td, table#game-grid th {
     border: 1px solid #ddd; }
 
@@ -33,7 +34,12 @@ table#game-grid {
   border-radius: 50%;
   height: 85%;
   width: 85%;
-  margin: auto; }
+  margin: auto;
+  -webkit-animation-duration: 1s;
+  -ms-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  -o-animation-duration: 1s;
+  animation-duration: 1s; }
 
 .player-1-disc {
   background-color: #e63d3d; }

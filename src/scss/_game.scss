@@ -10,6 +10,7 @@ $player-2-color: $color-yellow;
 table#game-grid{
 	margin: 0 auto;
 	background-color: #fff;
+	overflow: hidden;
 	td, th{
 		border: 1px solid #ddd;
 	}
@@ -20,6 +21,7 @@ table#game-grid{
 	height:85%;
 	width:85%;
 	margin:auto;
+	@include vendorize(animation-duration, 1s);	
 }
 
 .player-1-disc {

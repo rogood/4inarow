@@ -4,6 +4,7 @@ var gulp   = require('gulp'),
     sass = require('gulp-sass'),
     gulpconcat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
+    cssnano = require('gulp-cssnano'),
     templatecache = require('gulp-angular-templatecache');
     
 /* Files */
@@ -24,7 +25,8 @@ var jsSrcFiles = [
 ];
 
 var cssLibs = [
-  './node_modules/bootstrap/dist/css/bootstrap.css'
+  './node_modules/bootstrap/dist/css/bootstrap.css',
+   './node_modules/animate.css/animate.css'
 ];
 
 var cssBuildFiles = [
@@ -43,9 +45,9 @@ var allTemplateSrcFiles = 'src/templates/**/*.html';
 gulp.task('default', ['dev']);
 
 /* Bundle Tasks */
-gulp.task('dev', ['bundle-css', 'bundle-js-dev']);
+gulp.task('dev', ['bundle-css-dev', 'bundle-js-dev']);
 
-gulp.task('prod', ['bundle-css', 'bundle-js-prod']);
+gulp.task('prod', ['bundle-css-prod', 'bundle-js-prod']);
 
 /* CSS Tasks */
 gulp.task('build-css', function() {
@@ -54,11 +56,19 @@ gulp.task('build-css', function() {
     .pipe(gulp.dest('./build/css'));
 });
 
-gulp.task('bundle-css', ['build-css'], function() {
+gulp.task('bundle-css-dev', ['build-css'], function() {
   var files = cssLibs.concat(cssBuildFiles);
   return gulp.src(files)
-  .pipe(gulpconcat('bundle.css'))
-  .pipe(gulp.dest('./dist'));
+    .pipe(gulpconcat('bundle.css'))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('bundle-css-prod', ['build-css'], function() {
+  var files = cssLibs.concat(cssBuildFiles);
+  return gulp.src(files)
+    .pipe(gulpconcat('bundle.css'))
+    .pipe(cssnano())
+    .pipe(gulp.dest('./dist'));
 });
 
 /* HTML Template tasks */
@@ -101,8 +111,8 @@ gulp.task('connect', function () {
 });
 
 /* Watches */
-gulp.task('watch', ['default'], function() {
-  gulp.watch(allJsSrcFiles, ['jshint', 'bundle-js']);
-  gulp.watch(allCssSrcFiles, ['bundle-css']);
-  gulp.watch(allTemplateSrcFiles, ['bundle-js']);
+gulp.task('watch', ['dev'], function() {
+  gulp.watch(allJsSrcFiles, ['jshint', 'bundle-js-dev']);
+  gulp.watch(allCssSrcFiles, ['bundle-css-dev']);
+  gulp.watch(allTemplateSrcFiles, ['bundle-js-dev']);
 });

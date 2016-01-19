@@ -24,7 +24,8 @@
                 <tbody>
                     <tr ng-repeat="rowNo in rowIndices">
                         <td ng-repeat="colNo in colIndices">
-                            <div class="disc" 
+                            <div class="disc animated bounceInDown" 
+                                ng-if="grid[colNo][rowNo] > 0"
                                 ng-class="{ 'player-1-disc' : grid[colNo][rowNo] === 1, 'player-2-disc': grid[colNo][rowNo] === 2 }">
                             </div>
                         </td>
