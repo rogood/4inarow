@@ -5,66 +5,104 @@ var gulp   = require('gulp'),
     gulpconcat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     templatecache = require('gulp-angular-templatecache');
+    
+/* Files */
+var jsLibs = [    
+    './node_modules/angular/angular.js',
+    './node_modules/angular-ui-router/release/angular-ui-router.js',
+    './node_modules/jquery/dist/jquery.js',
+    './node_modules/bootstrap/dist/js/bootstrap.js'
+];
 
-gulp.task('default', ['bundle-css', 'bundle-js']);
+var jsDevLibs = [
+     './node_modules/angular-mocks/angular-mocks.js',
+];
 
-gulp.task('jshint', function() {
-  return gulp.src('./src/js/**/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'));
-});
+var jsSrcFiles = [
+      './src/js/app.js',
+      './src/js/app/**/*.js'
+];
 
+var cssLibs = [
+  './node_modules/bootstrap/dist/css/bootstrap.css'
+];
+
+var cssBuildFiles = [
+  "./build/css/base.css"
+];
+
+var templateBuildFiles = [
+  './build/js/templates.js'
+];
+
+var allCssSrcFiles = './src/scss/**/*.scss';
+var allJsSrcFiles = 'src/scss/**/*.scss';
+var allTemplateSrcFiles = 'src/templates/**/*.html';
+
+/* Default Task */
+gulp.task('default', ['dev']);
+
+/* Bundle Tasks */
+gulp.task('dev', ['bundle-css', 'bundle-js-dev']);
+
+gulp.task('prod', ['bundle-css', 'bundle-js-prod']);
+
+/* CSS Tasks */
 gulp.task('build-css', function() {
-  return gulp.src('./src/scss/**/*.scss')
+  return gulp.src(allCssSrcFiles)
     .pipe(sass())
     .pipe(gulp.dest('./build/css'));
 });
 
 gulp.task('bundle-css', ['build-css'], function() {
-
-  return gulp.src([
-    './node_modules/bootstrap/dist/css/bootstrap.css',
-    './build/css/base.css'
-  ])
+  var files = cssLibs.concat(cssBuildFiles);
+  return gulp.src(files)
   .pipe(gulpconcat('bundle.css'))
   .pipe(gulp.dest('./dist'));
-
 });
 
+/* HTML Template tasks */
 gulp.task('build-templates', function() {
     return gulp
-        .src('./src/templates/**/*.html')
+        .src(allTemplateSrcFiles)
         .pipe(templatecache({standalone: true}))
         .pipe(gulp.dest('./build/js'));
 });
 
-gulp.task('bundle-js', ['build-templates'], function() {
-  return gulp.src([
-    './node_modules/angular/angular.js',
-    './node_modules/angular-ui-router/release/angular-ui-router.js',
-    //'./node_modules/angular-mocks/angular-mocks.js',
-    './node_modules/jquery/dist/jquery.js',
-    './node_modules/bootstrap/dist/js/bootstrap.js',
-    './build/js/templates.js',
-    './src/js/app.js',
-    './src/js/gameController.js',
-    './src/js/gameValidator.js'
-  ])
-  .pipe(gulpconcat('bundle-min.js'))
-  .pipe(uglify())
+/* Javascript Tasks */
+gulp.task('bundle-js-dev', ['build-templates'], function() {
+  var files = jsLibs.concat(jsDevLibs, jsSrcFiles, templateBuildFiles);
+  return gulp.src(files)
+  .pipe(gulpconcat('bundle.js'))
   .pipe(gulp.dest('./dist'));
-
 });
 
+gulp.task('bundle-js-prod', ['build-templates'], function() {
+  var files = jsLibs.concat(jsSrcFiles, templateBuildFiles);
+  return gulp.src(files)
+  .pipe(gulpconcat('bundle.js'))
+  .pipe(uglify())
+  .pipe(gulp.dest('./dist'));
+});
+
+/* JS Hinting */
+gulp.task('jshint', function() {
+  return gulp.src(allJsSrcFiles)
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
+/* Run a local server */
 gulp.task('connect', function () {
   return connect.server({
     root: '',
-    port: 8888
+    port: 8080
   });
 });
 
+/* Watches */
 gulp.task('watch', ['default'], function() {
-  gulp.watch('src/js/**/*.js', ['jshint', 'bundle-js']);
-  gulp.watch('src/scss/**/*.scss', ['bundle-css']);
-  gulp.watch('src/templates/**/*.html', ['bundle-js']);
+  gulp.watch(allJsSrcFiles, ['jshint', 'bundle-js']);
+  gulp.watch(allCssSrcFiles, ['bundle-css']);
+  gulp.watch(allTemplateSrcFiles, ['bundle-js']);
 });

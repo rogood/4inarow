@@ -58,7 +58,7 @@ table#game-grid{
 	background-color:$reset-button-color;
 	margin-left: 10px;
 	float:right;
-	&:hover{
+	&:hover, &:active, &:visited, &:focus{
 		color:#fff;
 	}
 }

@@ -65,7 +65,7 @@ table#game-grid {
   background-color: #A4D4B4;
   margin-left: 10px;
   float: right; }
-  .reset-button:hover {
+  .reset-button:hover, .reset-button:active, .reset-button:visited, .reset-button:focus {
     color: #fff; }
 
 .player-1-turn {
