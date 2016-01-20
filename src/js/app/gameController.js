@@ -107,7 +107,12 @@ angular.module('app')
 			}
 			else
 			{
-				toggleCurrentPlayer();
+				// Timeout to allow for the 1s drop animation
+				$timeout(function()
+				{
+					toggleCurrentPlayer();
+				},
+				1000);
 			}
 			
 			// The move was made
@@ -179,7 +184,7 @@ angular.module('app')
 				{
 					makeAutomatedMove(playerId);
 				},
-				1000);
+				500);
 			}
 		}
 		else {
