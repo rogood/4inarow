@@ -5,7 +5,8 @@ var gulp   = require('gulp'),
     gulpconcat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     cssnano = require('gulp-cssnano'),
-    templatecache = require('gulp-angular-templatecache');
+    templatecache = require('gulp-angular-templatecache'),
+    babel = require("gulp-babel");
     
 /* Files */
 var jsLibs = [    
@@ -38,7 +39,7 @@ var templateBuildFiles = [
 ];
 
 var allCssSrcFiles = './src/scss/**/*.scss';
-var allJsSrcFiles = 'src/scss/**/*.scss';
+var allJsSrcFiles = 'src/js/**/*.js';
 var allTemplateSrcFiles = 'src/templates/**/*.html';
 
 /* Default Task */
@@ -57,19 +58,54 @@ gulp.task('build-css', function() {
 });
 
 gulp.task('bundle-css-dev', ['build-css'], function() {
-  var files = cssLibs.concat(cssBuildFiles);
-  return gulp.src(files)
-    .pipe(gulpconcat('bundle.css'))
-    .pipe(gulp.dest('./dist'));
+    bundleCSS(cssBuildFiles, 'bundle.css', true);
+    bundleCSS(cssLibs, 'libs.css', true);
 });
 
 gulp.task('bundle-css-prod', ['build-css'], function() {
-  var files = cssLibs.concat(cssBuildFiles);
-  return gulp.src(files)
-    .pipe(gulpconcat('bundle.css'))
-    .pipe(cssnano())
-    .pipe(gulp.dest('./dist'));
+    bundleCSS(cssBuildFiles, 'bundle.css', false);
+    bundleCSS(cssLibs, 'libs.css', false);
 });
+
+/* Javascript Tasks */
+gulp.task('bundle-js-dev', ['build-templates'], function() {
+    bundleJS(jsSrcFiles.concat(templateBuildFiles), 'bundle.js', true, true);
+    bundleJS(jsLibs.concat(jsDevLibs), 'libs.js', true, false);
+});
+
+gulp.task('bundle-js-prod', ['build-templates'], function() {
+    bundleJS(jsSrcFiles.concat(templateBuildFiles), 'bundle.js', false, true);
+    bundleJS(jsLibs, 'libs.js', false, false);
+});
+
+function bundleCSS(files, outputFilename, isDev){
+
+  var task = gulp.src(files)
+  .pipe(gulpconcat(outputFilename));
+  
+  if(!isDev){
+    task = task.pipe(cssnano())
+  }
+  
+  return task.pipe(gulp.dest('./dist'));
+}
+
+function bundleJS(files, outputFilename, isDev, useBabel){
+  
+  var task = gulp.src(files);
+  
+  if(useBabel){
+    task = task.pipe(babel());
+  }
+  
+  task = task.pipe(gulpconcat(outputFilename));
+  
+  if(!isDev){
+    task = task.pipe(uglify());
+  }
+  
+  return task.pipe(gulp.dest('./dist'));
+}
 
 /* HTML Template tasks */
 gulp.task('build-templates', function() {
@@ -79,26 +115,10 @@ gulp.task('build-templates', function() {
         .pipe(gulp.dest('./build/js'));
 });
 
-/* Javascript Tasks */
-gulp.task('bundle-js-dev', ['build-templates'], function() {
-  var files = jsLibs.concat(jsDevLibs, jsSrcFiles, templateBuildFiles);
-  return gulp.src(files)
-  .pipe(gulpconcat('bundle.js'))
-  .pipe(gulp.dest('./dist'));
-});
-
-gulp.task('bundle-js-prod', ['build-templates'], function() {
-  var files = jsLibs.concat(jsSrcFiles, templateBuildFiles);
-  return gulp.src(files)
-  .pipe(gulpconcat('bundle.js'))
-  .pipe(uglify())
-  .pipe(gulp.dest('./dist'));
-});
-
 /* JS Hinting */
 gulp.task('jshint', function() {
   return gulp.src(allJsSrcFiles)
-    .pipe(jshint())
+    .pipe(jshint({"esversion": 6}))
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
