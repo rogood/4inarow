@@ -1,14 +1,14 @@
 <div>
     <div class="info-bar row">
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <div class="col-xs-3">
             <div class="disc {{getCurrentPlayer().discStyle}}"></div>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-6">
             <span class="message-bar {{getCurrentPlayer().discStyle}}">
                 <span>{{message.text}}</span>
             </span>
         </div>
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <div class="button-container col-xs-3">
             <input class="reset-button btn btn-lg" type="button" ng-click="resetGame()" value="New Game"/>
         </div>
     </div>

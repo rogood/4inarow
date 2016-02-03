@@ -120,6 +120,7 @@ angular.module('app')
 		}	
 	}
 	
+	// Negate the id when there is a winning chain
 	function markChains(chains){
 		for (var c = 0; c < chains.length; c++) {
 			var chain = chains[c].chain;

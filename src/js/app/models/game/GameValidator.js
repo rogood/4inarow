@@ -77,7 +77,9 @@ angular.module('app')
 			for (var r = 0; r < _rowCount; r++) {
 				chain.length = 0;
 				for (var c = 0; c < _colCount; c++) {
-					setChain(chain, c, r, playerId);
+					if(setChain(chain, c, r, playerId)){
+						break;
+					}
 				}
 
 				if (chain.length >= _winningCount) {
@@ -93,7 +95,9 @@ angular.module('app')
 			for (var c = 0; c < _colCount; c++) {
 				chain.length = 0;
 				for (var r = 0; r < _grid[c].length; r++) {
-					setChain(chain, c, r, playerId);
+					if(setChain(chain, c, r, playerId)){
+						break;
+					}
 				}
 
 				if (chain.length >= _winningCount) {
@@ -114,7 +118,9 @@ angular.module('app')
 				chain.length = 0;
 
 				while (currCol < _colCount && currRow < _rowCount) {
-					setChain(chain, currCol, currRow, playerId);
+					if(setChain(chain, currCol, currRow, playerId)){
+						break;
+					}
 
 					currRow++;
 					currCol++;
@@ -132,7 +138,9 @@ angular.module('app')
 					chain.length = 0;
 
 					while (currCol < _colCount && currRow < _rowCount) {
-						setChain(chain, currCol, currRow, playerId);
+						if(setChain(chain, currCol, currRow, playerId)){
+							break;
+						}
 
 						currRow++;
 						currCol++;
@@ -157,7 +165,9 @@ angular.module('app')
 				chain.length = 0;
 
 				while (currCol >= 0 && currRow < _rowCount) {
-					setChain(chain, currCol, currRow, playerId);
+					if(setChain(chain, currCol, currRow, playerId)){
+						break;
+					}
 
 					currRow++;
 					currCol--;
@@ -175,7 +185,9 @@ angular.module('app')
 					chain.length = 0;
 
 					while (currCol >= 0 && currRow < _rowCount) {
-						setChain(chain, currCol, currRow, playerId);
+						if(setChain(chain, currCol, currRow, playerId)){
+							break;
+						}
 
 						currRow++;
 						currCol--;
@@ -198,6 +210,11 @@ angular.module('app')
 			else if (chain.length < _winningCount) {
 				chain.length = 0;
 			}
+			else {
+				// We have a complete chain
+				return true;
+			}
+			return false;
 		}
 
 		return GameValidator;
