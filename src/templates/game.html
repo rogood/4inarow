@@ -1,22 +1,27 @@
 <div>
-    <div class="info-bar well row">
-        <div col="col-xs-12">
-            <input class="reset-button btn btn-lg" type="button" ng-click="resetGame()" value="New Game"/>
-            <span class="message-bar {{message.cssClass}}">
+    <div class="info-bar row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="disc {{getCurrentPlayer().discStyle}}"></div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <span class="message-bar {{getCurrentPlayer().discStyle}}">
                 <span>{{message.text}}</span>
             </span>
         </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <input class="reset-button btn btn-lg" type="button" ng-click="resetGame()" value="New Game"/>
+        </div>
     </div>
-    <div class="row">
+    <div class="row game-container">
         <div col="col-xs-12">
             <table id="game-grid">
                 <thead>
                     <tr>
                         <th ng-repeat="colNo in colIndices">
                             <input class="drop-button" 
-                                ng-disabled="!currentPlayer() || !currentPlayer().isUser" 
+                                ng-disabled="!getCurrentPlayer() || !getCurrentPlayer().isUser" 
                                 type="button" 
-                                ng-click="currentPlayer().makeMove(colNo)" 
+                                ng-click="getCurrentPlayer().makeMove(colNo)" 
                                 value="drop!" />
                         </th>
                     </tr>
@@ -24,9 +29,11 @@
                 <tbody>
                     <tr ng-repeat="rowNo in rowIndices">
                         <td ng-repeat="colNo in colIndices">
-                            <div class="disc animated bounceInDown" 
-                                ng-if="grid()[colNo][rowNo] > 0"
-                                ng-class="{ 'player-1-disc' : grid()[colNo][rowNo] === 1, 'player-2-disc': grid()[colNo][rowNo] === 2 }">
+                            <div class="disc {{playerCache[getGrid()[colNo][rowNo]].discStyle}} animated bounceInDown" 
+                                ng-if="getGrid()[colNo][rowNo] > 0">
+                            </div>
+                            <div class="disc {{playerCache[getGrid()[colNo][rowNo] * -1].discStyle}} animated blink" 
+                                ng-if="getGrid()[colNo][rowNo] < 0">
                             </div>
                         </td>
                     </tr>

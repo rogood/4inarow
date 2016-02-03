@@ -1,74 +1,93 @@
 $color-red: #e63d3d;
 $color-yellow: #e7d242;
-$drop-button-color:#A4D4B4;
-$reset-button-color:#A4D4B4;
-$info-bar-color:#fff;
+$color-lilac: #e7d2ff;
 
-$player-1-color: $color-red;
-$player-2-color: $color-yellow;
+$drop-button-color:#a1a6e2;
+$reset-button-color:#a1a6e2;
+$info-bar-color:#bcbabe;
 
-table#game-grid{
-	margin: 0 auto;
-	background-color: #fff;
-	overflow: hidden;
-	td, th{
-		border: 1px solid #ddd;
-	}
-}
-
-.disc {
+.disc{
 	@include vendorize(border-radius, 50%);
 	height:85%;
 	width:85%;
 	margin:auto;
 	@include vendorize(animation-duration, 1s);	
+	&.disc-style-red{
+		background-color: $color-red;
+	}
+	&.disc-style-yellow{
+		background-color: $color-yellow;
+	}
+	&.disc-style-lilac{
+		background-color: $color-lilac;
+	}
+	&.disc-style-smiley{
+		background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f604.svg");
+	}
+	&.disc-style-rage{
+		background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f621.svg");
+	}
 }
 
-.player-1-disc {
-	background-color: $player-1-color;
-}
-.player-2-disc {
-	background-color: $player-2-color;
-}
+.game-container{
+	margin:16px 8px;
+	
+	table#game-grid{
+		margin: 0 auto;
+		overflow: hidden;
+		td, th{
+			border: 2px solid $page-color;
+		}
+		td{
+			background-color: #fff;
+		}
+	}
 
-.drop-button{
-	height:62px;
-	width: 100%;
-	color:#fff;
-	background-color:$drop-button-color;
-	border-style:none;
-	margin: 0;
-
-	&:disabled{
-		color:#ccc;
-		background-color:desaturate( $drop-button-color, 80% );
+	.drop-button{
+		height:62px;
+		width: 100%;
+		color:#fff;
+		background-color:$drop-button-color;
+		border-style:none;
+		margin: 0;
+	
+		&:disabled{
+			color:#ccc;
+			background-color:desaturate( $drop-button-color, 80% );
+		}
 	}
 }
 
 .info-bar{
 	background-color: $info-bar-color;
-}
+	height: 84px;
+	padding: 10px;
+	overflow: hidden;
+	.disc{
+		height:64px;
+		width:64px;
+	}
+	
+	.message-bar{
+		color: #fff;
+		font-size: 28px;
+		text-align: center;
+		line-height: 84px;
+	}
 
-.message-bar{
-	color: #5CA4A9;
-	font-size: 1.4em;
-	text-align: center;
-}
-
-.reset-button{
-	color:#fff;
-	background-color:$reset-button-color;
-	margin-left: 10px;
-	float:right;
-	&:hover, &:active, &:visited, &:focus{
+	.reset-button{
 		color:#fff;
+		background-color:$reset-button-color;
+		&:hover, &:active, &:visited, &:focus{
+			color:#fff;
+		}
 	}
 }
 
-.player-1-turn{
-	color:$player-1-color;
+.animated.blink {
+  @include vendorize(animation, blinker 1s linear infinite);
 }
 
-.player-2-turn{
-	color:$player-2-color;
+@keyframes blinker {  
+  50% { opacity: 0.0; }
 }

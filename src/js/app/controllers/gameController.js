@@ -12,8 +12,9 @@ angular.module('app')
 	
 	// These scope variables are set to functions in order to capture 
 	// internal changes to the properties
-	$scope.currentPlayer = _game.getCurrentPlayer;
-	$scope.grid = _game.getGrid;
+	$scope.getCurrentPlayer = _game.getCurrentPlayer;
+	$scope.getGrid = _game.getGrid;
+	$scope.message = {};
 	
 	for (i = _game.colCount - 1; i >= 0; i--) {
 		$scope.colIndices.unshift(i);
@@ -23,21 +24,18 @@ angular.module('app')
 		$scope.rowIndices.push(i);
 	}
 	
-	$scope.message = {};
-	
 	$scope.resetGame = function(){
 		_game.reset();
 	};
 	
-	$scope.makeMove = function(col){
-		_game.makeMove($scope.currentPlayer, col);
-	};
-	
 	// Setting up the game
-	_game.registerPlayer(new HumanPlayer(1, { isUser: true }));
-	_game.registerPlayer(new AutomatedPlayer(2));
+	_game.registerPlayer(new HumanPlayer(1, "smiley", { isUser: true }));
+	_game.registerPlayer(new AutomatedPlayer(2, "rage"));
+	//_game.registerPlayer(new AutomatedPlayer(3, "red"));
+	
+	$scope.playerCache = _game.getPlayerCache();
 		
-	_game.onGameEnd(function(winningPlayer){
+	_game.onGameEnd(function(winningPlayer, chains){
 		
 		if (!winningPlayer){
 			$scope.message = _messages["tie"];

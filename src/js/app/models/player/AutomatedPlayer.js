@@ -3,18 +3,25 @@ angular.module('app')
 {
 	class AutomatedPlayer extends Player {
 		
-		constructor(id, { isUser = false } = {}) {
-			super(id, { isUser : isUser, isAutomated: true });
+		constructor(id, discStyle, {
+			isUser = false,
+			delayMax = 800,
+			delayMin = 200
+		} = {}) {
+			super(id, discStyle, { isUser : isUser, isAutomated: true });
+			this.delayMax = delayMax;
+			this.delayMin = delayMin;
 		}
 		
 		onTurnStarted(){
 			var self = this;
+			var thinkingTime = this.delayMin + Math.floor(Math.random() * this.delayMax);
 	
 			$timeout(function()
 			{
 				makeAutomatedMove(self.game, self.id);
 			},
-			500);
+			thinkingTime);
 		}
 	}
 	

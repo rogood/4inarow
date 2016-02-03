@@ -8,6 +8,7 @@ angular.module('app')
 		_playerCache = {},
 		_gridObj = null,
 		_dropTimeout = null,
+		_lastMoveMadeBy = null,
 		
 		// Event Handlers
 		_onIllegalMove = function(playerId){},
@@ -53,6 +54,10 @@ angular.module('app')
 		getCurrentPlayer(){
 			return _playerCache[_currentPlayerId];
 		}
+		
+		getPlayerCache(){
+			return _playerCache;
+		}
 	
 		start(){ 
 			setCurrentPlayer(_players[0]);
@@ -61,6 +66,7 @@ angular.module('app')
 		reset(){ 
 			$timeout.cancel(_dropTimeout);   
 			_gridObj.reset();
+			_lastMoveMadeBy = null;
 			setCurrentPlayer(_players[0]);
 		}
 		
@@ -72,8 +78,9 @@ angular.module('app')
 		
 		makeMove(playerId, col){
 		
-			if(_gameValidator.isValidMove(_currentPlayerId, playerId, col))
+			if(_lastMoveMadeBy !== playerId && _gameValidator.isValidMove(_currentPlayerId, playerId, col))
 			{
+				_lastMoveMadeBy = playerId;
 				_gridObj.drop(col, playerId);
 	
 				checkForGameEnd(playerId, this.moveDelay);
@@ -93,25 +100,36 @@ angular.module('app')
 	
 	function checkForGameEnd(playerId, moveDelay){
 		
-		if(_gameValidator.checkTie())
-		{
+		if(_gameValidator.checkTie()){
 			_onGameEnd(null);
 			setCurrentPlayer(null);
 		}
-		else if(_gameValidator.checkWinner(playerId))
-		{
-			_onGameEnd(_playerCache[playerId]);		
-			setCurrentPlayer(null);
+		else{	
+			var chains = _gameValidator.checkWinner(playerId);
+			if(chains){
+				markChains(chains);
+				_onGameEnd(_playerCache[playerId], chains);		
+				setCurrentPlayer(null);
+			}
+			else{
+				// Timeout to allow for the 1s drop animation
+				_dropTimeout = $timeout(function(){
+					toggleCurrentPlayer();
+				}, moveDelay);
+			}
+		}	
+	}
+	
+	function markChains(chains){
+		for (var c = 0; c < chains.length; c++) {
+			var chain = chains[c].chain;
+			for (var i = 0; i < chain.length; i++) {
+				var cell = _gridObj.grid[chain[i][0]][chain[i][1]];
+				if(cell > 0){
+					_gridObj.grid[chain[i][0]][chain[i][1]] = cell * -1;
+				}
+			}			
 		}
-		else
-		{
-			// Timeout to allow for the 1s drop animation
-			_dropTimeout = $timeout(function()
-			{
-				toggleCurrentPlayer();
-			}, moveDelay);
-		}
-		
 	}
 	
 	function setCurrentPlayer(playerId){

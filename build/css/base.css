@@ -4,27 +4,18 @@ html, body {
 body {
   margin: 0 auto;
   font-family: 'Nunito', 'Georgia', sans-serif;
-  background-color: #fff; }
+  background-color: #f1f1f2; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Nunito', 'Georgia', sans-serif; }
 
 .navbar {
-  background-color: #3B1C32; }
+  background-color: #1995ad;
+  margin-bottom: 0; }
   .navbar .navbar-brand {
     font-family: 'Nunito', 'Georgia', cursive;
     font-size: 28px;
     color: #fff; }
-
-.page-content {
-  margin: 8px; }
-
-table#game-grid {
-  margin: 0 auto;
-  background-color: #fff;
-  overflow: hidden; }
-  table#game-grid td, table#game-grid th {
-    border: 1px solid #ddd; }
 
 .disc {
   -webkit-border-radius: 50%;
@@ -40,42 +31,64 @@ table#game-grid {
   -moz-animation-duration: 1s;
   -o-animation-duration: 1s;
   animation-duration: 1s; }
+  .disc.disc-style-red {
+    background-color: #e63d3d; }
+  .disc.disc-style-yellow {
+    background-color: #e7d242; }
+  .disc.disc-style-lilac {
+    background-color: #e7d2ff; }
+  .disc.disc-style-smiley {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f604.svg"); }
+  .disc.disc-style-rage {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f621.svg"); }
 
-.player-1-disc {
-  background-color: #e63d3d; }
-
-.player-2-disc {
-  background-color: #e7d242; }
-
-.drop-button {
-  height: 62px;
-  width: 100%;
-  color: #fff;
-  background-color: #A4D4B4;
-  border-style: none;
-  margin: 0; }
-  .drop-button:disabled {
-    color: #ccc;
-    background-color: #bcbcbc; }
+.game-container {
+  margin: 16px 8px; }
+  .game-container table#game-grid {
+    margin: 0 auto;
+    overflow: hidden; }
+    .game-container table#game-grid td, .game-container table#game-grid th {
+      border: 2px solid #f1f1f2; }
+    .game-container table#game-grid td {
+      background-color: #fff; }
+  .game-container .drop-button {
+    height: 62px;
+    width: 100%;
+    color: #fff;
+    background-color: #a1a6e2;
+    border-style: none;
+    margin: 0; }
+    .game-container .drop-button:disabled {
+      color: #ccc;
+      background-color: #c2c2c2; }
 
 .info-bar {
-  background-color: #fff; }
+  background-color: #bcbabe;
+  height: 84px;
+  padding: 10px;
+  overflow: hidden; }
+  .info-bar .disc {
+    height: 64px;
+    width: 64px; }
+  .info-bar .message-bar {
+    color: #fff;
+    font-size: 28px;
+    text-align: center;
+    line-height: 84px; }
+  .info-bar .reset-button {
+    color: #fff;
+    background-color: #a1a6e2;
+    margin-left: 10px; }
+    .info-bar .reset-button:hover, .info-bar .reset-button:active, .info-bar .reset-button:visited, .info-bar .reset-button:focus {
+      color: #fff; }
 
-.message-bar {
-  color: #5CA4A9;
-  font-size: 1.4em;
-  text-align: center; }
+.animated.blink {
+  -webkit-animation: blinker 1s linear infinite;
+  -ms-animation: blinker 1s linear infinite;
+  -moz-animation: blinker 1s linear infinite;
+  -o-animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite; }
 
-.reset-button {
-  color: #fff;
-  background-color: #A4D4B4;
-  margin-left: 10px;
-  float: right; }
-  .reset-button:hover, .reset-button:active, .reset-button:visited, .reset-button:focus {
-    color: #fff; }
-
-.player-1-turn {
-  color: #e63d3d; }
-
-.player-2-turn {
-  color: #e7d242; }
+@keyframes blinker {
+  50% {
+    opacity: 0.0; } }

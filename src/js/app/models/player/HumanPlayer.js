@@ -3,8 +3,8 @@ angular.module('app')
 {
 	class HumanPlayer extends Player{
 		
-		constructor(id, { isUser = false } = {}) {
-			super(id, { isUser : isUser, isAutomated: false });
+		constructor(id, discStyle, { isUser = false } = {}) {
+			super(id, discStyle, { isUser : isUser, isAutomated: false });
 		}
 		
 		makeMove(col){

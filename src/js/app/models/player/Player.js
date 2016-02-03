@@ -3,11 +3,12 @@ angular.module('app')
 {
 	class Player{
 		
-		constructor(id, { isUser = false, isAutomated = true} = {}) {
+		constructor(id, discStyle, { isUser = false, isAutomated = true} = {}) {
 			this.id = id;
 			this.isUser = isUser;
 			this.isAutomated = isAutomated;
 			this.game = null;
+			this.discStyle = "disc-style-" + discStyle;
 		}
 		
 		setGame(game){
