@@ -1,21 +1,31 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(https://fonts.googleapis.com/css?family=Nunito);
 html, body {
   height: 100%; }
 
 body {
   margin: 0 auto;
   font-family: 'Nunito', 'Georgia', sans-serif;
-  background-color: #f1f1f2; }
+  background-color: #304040; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Nunito', 'Georgia', sans-serif; }
 
 .navbar {
-  background-color: #1995ad;
-  margin-bottom: 0; }
+  background-color: #04202c;
+  margin-bottom: 0;
+  height: 80px;
+  line-height: 80px; }
   .navbar .navbar-brand {
-    font-family: 'Nunito', 'Georgia', cursive;
+    margin: 16px 10px;
     font-size: 28px;
-    color: #fff; }
+    height: 46px;
+    color: #fff;
+    font-family: 'Droid Sans', cursive;
+    border-style: solid;
+    border-color: #fff;
+    padding: 10px;
+    display: inline-block; }
 
 .disc {
   -webkit-border-radius: 50%;
@@ -41,6 +51,12 @@ h1, h2, h3, h4, h5, h6 {
     background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f604.svg"); }
   .disc.disc-style-rage {
     background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f621.svg"); }
+  .disc.disc-style-thumbsup {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44d.svg"); }
+  .disc.disc-style-thumbsdown {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44e.svg"); }
+  .disc.disc-style-open_hands {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f450.svg"); }
 
 .game-container {
   margin: 16px 8px; }
@@ -48,22 +64,22 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
     overflow: hidden; }
     .game-container table#game-grid td, .game-container table#game-grid th {
-      border: 2px solid #f1f1f2; }
+      border: 2px solid #304040; }
     .game-container table#game-grid td {
       background-color: #fff; }
   .game-container .drop-button {
     height: 62px;
     width: 100%;
     color: #fff;
-    background-color: #a1a6e2;
+    background-color: #5b7065;
     border-style: none;
     margin: 0; }
     .game-container .drop-button:disabled {
       color: #ccc;
-      background-color: #c2c2c2; }
+      background-color: #666666; }
 
 .info-bar {
-  background-color: #bcbabe;
+  background-color: #c9d1c8;
   height: 84px;
   padding: 10px;
   overflow: hidden; }
@@ -71,7 +87,7 @@ h1, h2, h3, h4, h5, h6 {
     height: 64px;
     width: 64px; }
   .info-bar .message-bar {
-    color: #fff;
+    color: #04202c;
     font-size: 24px;
     text-align: center;
     line-height: 64px; }
@@ -79,7 +95,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 64px; }
     .info-bar .button-container .reset-button {
       color: #fff;
-      background-color: #a1a6e2; }
+      background-color: #5b7065; }
       .info-bar .button-container .reset-button:hover, .info-bar .button-container .reset-button:active, .info-bar .button-container .reset-button:visited, .info-bar .button-container .reset-button:focus {
         color: #fff; }
 
@@ -89,6 +105,18 @@ h1, h2, h3, h4, h5, h6 {
   -moz-animation: blinker 1s linear infinite;
   -o-animation: blinker 1s linear infinite;
   animation: blinker 1s linear infinite; }
+
+@-webkit-keyframes blinker {
+  50% {
+    opacity: 0.0; } }
+
+@-moz-keyframes blinker {
+  50% {
+    opacity: 0.0; } }
+
+@-o-keyframes blinker {
+  50% {
+    opacity: 0.0; } }
 
 @keyframes blinker {
   50% {

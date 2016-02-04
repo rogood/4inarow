@@ -1,4 +1,7 @@
-$page-color:#f1f1f2;
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+
+$page-color:#304040;
 
 @mixin vendorize($name, $argument) {
   -webkit-#{$name}: #{$argument};
@@ -6,4 +9,19 @@ $page-color:#f1f1f2;
   -moz-#{$name}: #{$argument};
   -o-#{$name}: #{$argument};
   #{$name}: #{$argument};
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
 }

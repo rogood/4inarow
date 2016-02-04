@@ -1,4 +1,4 @@
-$navbar-color:#1995ad;
+$navbar-color:#04202c;
 $navbar-brand-color:#fff;
 
 html, body {
@@ -16,9 +16,17 @@ h1, h2, h3, h4, h5, h6{
 .navbar{
 	background-color:$navbar-color;
 	margin-bottom: 0;
+    height: 80px;
+    line-height: 80px;
 	.navbar-brand{
-		font-family: 'Nunito', 'Georgia', cursive;
+        margin: 16px 10px;
 		font-size: 28px;
+        height: 46px;
 	 	color:$navbar-brand-color;
+		font-family: 'Droid Sans', cursive;
+		border-style:solid;
+		border-color: $navbar-brand-color; 
+		padding: 10px;
+		display:inline-block;
 	}
 }

@@ -2,9 +2,10 @@ $color-red: #e63d3d;
 $color-yellow: #e7d242;
 $color-lilac: #e7d2ff;
 
-$drop-button-color:#a1a6e2;
-$reset-button-color:#a1a6e2;
-$info-bar-color:#bcbabe;
+$drop-button-color:#5b7065;
+$reset-button-color:#5b7065;
+$info-bar-color:#c9d1c8;
+$info-bar-text-color:#04202c;
 
 .disc{
 	@include vendorize(border-radius, 50%);
@@ -27,6 +28,15 @@ $info-bar-color:#bcbabe;
 	&.disc-style-rage{
 		background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f621.svg");
 	}
+	&.disc-style-thumbsup {
+ 		background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44d.svg"); 
+  	}
+	&.disc-style-thumbsdown {
+  		background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44e.svg"); 
+  	}
+	&.disc-style-open_hands {
+  		background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f450.svg"); 
+  	}
 }
 
 .game-container{
@@ -50,7 +60,6 @@ $info-bar-color:#bcbabe;
 		background-color:$drop-button-color;
 		border-style:none;
 		margin: 0;
-	
 		&:disabled{
 			color:#ccc;
 			background-color:desaturate( $drop-button-color, 80% );
@@ -69,7 +78,7 @@ $info-bar-color:#bcbabe;
 	}
 	
 	.message-bar{
-		color: #fff;
+		color: $info-bar-text-color;
 		font-size: 24px;
 		text-align: center;
 		line-height: 64px;
@@ -91,6 +100,6 @@ $info-bar-color:#bcbabe;
   @include vendorize(animation, blinker 1s linear infinite);
 }
 
-@keyframes blinker {  
+@include keyframes(blinker) {  
   50% { opacity: 0.0; }
 }

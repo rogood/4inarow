@@ -39,12 +39,15 @@ angular.module('app')
 		
 		if (!winningPlayer){
 			$scope.message = _messages["tie"];
+			$scope.infoBarIcon = "disc-style-open_hands";
 		}
 		else if(winningPlayer.isUser){
 			$scope.message = _messages["youWin"];
+			$scope.infoBarIcon = "disc-style-thumbsup";
 		}
 		else {
 			$scope.message = _messages["youLose"];
+			$scope.infoBarIcon = "disc-style-thumbsdown";
 		}
 		
 	});
@@ -62,6 +65,8 @@ angular.module('app')
 		if(player){
 			_messages["playerMove"].setMessage(player);
 			$scope.message = _messages["playerMove"];	
+			
+			$scope.infoBarIcon = player.discStyle;
 		}
 		
 	});
