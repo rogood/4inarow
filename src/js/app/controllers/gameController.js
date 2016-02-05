@@ -78,10 +78,10 @@ angular.module('app')
 	// This resizes the grid so that is appears as large as possible while still keeping square cells.
 	function resizeGame(){
 		$timeout(function(){
-			var gridBodyElem = document.getElementById("game-grid").getElementsByTagName('tbody')[0],
-				cellElems = gridBodyElem.getElementsByTagName('td'),
-				containerWidth = document.body.clientWidth - 20,
-				containerHeight = document.body.clientHeight - gridBodyElem.getBoundingClientRect().top - 20,
+			var gridBodyElem = document.getElementById("game-grid"),
+				cellElems = gridBodyElem.querySelectorAll('th, td'),
+				containerWidth = document.body.clientWidth - 10,
+				containerHeight = document.body.clientHeight - gridBodyElem.getBoundingClientRect().top - 25,
 				cellSize,
 				i;
 			
@@ -89,9 +89,9 @@ angular.module('app')
 				cellSize = containerWidth / _game.colCount;		
 			}
 			else{
-				cellSize = containerHeight / _game.rowCount;
+				cellSize = containerHeight / (_game.rowCount + 1);
 			}
-	
+			
 			for (i = 0; i < cellElems.length; i++){
 				cellElems[i].style.width = 
 					cellElems[i].style.height = 

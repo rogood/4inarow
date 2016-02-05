@@ -83,9 +83,9 @@ function bundleCSS(files, outputFilename, isDev){
   var task = gulp.src(files)
   .pipe(gulpconcat(outputFilename));
   
-  if(!isDev){
+  /*if(!isDev){
     task = task.pipe(cssnano())
-  }
+  }*/
   
   return task.pipe(gulp.dest('./dist'));
 }

@@ -9,10 +9,10 @@ $info-bar-text-color:#04202c;
 
 .disc{
 	@include vendorize(border-radius, 50%);
+	@include vendorize(animation-duration, 1s);
 	height:85%;
 	width:85%;
 	margin:auto;
-	@include vendorize(animation-duration, 1s);	
 	&.disc-style-red{
 		background-color: $color-red;
 	}
@@ -40,7 +40,7 @@ $info-bar-text-color:#04202c;
 }
 
 .game-container{
-	margin:16px 8px;
+	margin:16px 0px;
 	
 	table#game-grid{
 		margin: 0 auto;
@@ -54,38 +54,53 @@ $info-bar-text-color:#04202c;
 	}
 
 	.drop-button{
-		height:62px;
+		height:100%;
 		width: 100%;
-		color:#fff;
 		background-color:$drop-button-color;
 		border-style:none;
 		margin: 0;
+		color: rgba(255, 255, 255, 0.8);
+		i {
+			font-size:6vw;
+		}
+		&:hover{
+			color:rgba(255, 255, 255, 0.8);
+			background-color:saturate( $drop-button-color, 10% );
+		}
+		&:active{
+			color:rgba(255, 255, 255, 0.8);
+			background-color:saturate( $drop-button-color, 30% );
+		}
 		&:disabled{
-			color:#ccc;
+			color:rgba(255, 255, 255, 0.3);
 			background-color:desaturate( $drop-button-color, 80% );
+			animation: none;
 		}
 	}
 }
 
 .info-bar{
 	background-color: $info-bar-color;
-	height: 84px;
-	padding: 10px;
-	overflow: hidden;
+	padding: 1vh;
+	
+	> div{
+		line-height: 8vh;
+		margin: 1vh 0;
+	}
+	
 	.disc{
-		height:64px;
-		width:64px;
+		height:8vh;
+		width:8vh;
 	}
 	
 	.message-bar{
 		color: $info-bar-text-color;
-		font-size: 24px;
+		background-color: lighten( $info-bar-color, 15% );
+		font-size: 18px;
 		text-align: center;
-		line-height: 64px;
 	}
 	
 	.button-container{
-		line-height: 64px;
 		.reset-button{
 			color:#fff;
 			background-color:$reset-button-color;
@@ -97,9 +112,17 @@ $info-bar-text-color:#04202c;
 }
 
 .animated.blink {
-  @include vendorize(animation, blinker 1s linear infinite);
+ 	@include vendorize(animation, blinker 1s linear 20);
+}
+
+.animated.pulse{
+	@include vendorize(animation, pulse 0.75s linear 3);
 }
 
 @include keyframes(blinker) {  
   50% { opacity: 0.0; }
+}
+
+@include keyframes(pulse) {  
+	50% { color: rgba(255, 255, 255, 1); }
 }

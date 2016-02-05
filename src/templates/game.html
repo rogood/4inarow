@@ -1,28 +1,28 @@
 <div>
     <div class="info-bar row">
-        <div class="col-xs-3">
+        <div class="button-container col-xs-6 col-sm-2">
+            <input class="reset-button btn" type="button" ng-click="resetGame()" value="New Game"/>
+        </div>
+        <div class="col-xs-6 col-sm-2">
             <div class="disc {{infoBarIcon}}"></div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-12 col-sm-8">
             <div class="message-bar">
                 <span>{{message.text}}</span>
             </div>
         </div>
-        <div class="button-container col-xs-3">
-            <input class="reset-button btn btn-lg" type="button" ng-click="resetGame()" value="New Game"/>
-        </div>
     </div>
     <div class="row game-container">
-        <div col="col-xs-12">
+        <div class="col-xs-12">
             <table id="game-grid">
                 <thead>
                     <tr>
                         <th ng-repeat="colNo in colIndices">
-                            <input class="drop-button" 
-                                ng-disabled="!getCurrentPlayer() || !getCurrentPlayer().isUser" 
-                                type="button" 
-                                ng-click="getCurrentPlayer().makeMove(colNo)" 
-                                value="drop!" />
+                                <button class="drop-button animated pulse" 
+                                    ng-disabled="!getCurrentPlayer() || !getCurrentPlayer().isUser" 
+                                    ng-click="getCurrentPlayer().makeMove(colNo)">
+                                        <i class="fa fa-arrow-circle-o-down"></i>
+                                </button>
                         </th>
                     </tr>
                 </thead>
