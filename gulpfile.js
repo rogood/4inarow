@@ -16,10 +16,6 @@ var jsLibs = [
     './node_modules/bootstrap/dist/js/bootstrap.js'
 ];
 
-var jsDevLibs = [
-     './node_modules/angular-mocks/angular-mocks.js',
-];
-
 var jsSrcFiles = [
       './src/js/app.js',
       './src/js/app/**/*.js'
@@ -70,7 +66,7 @@ gulp.task('bundle-css-prod', ['build-css'], function() {
 /* Javascript Tasks */
 gulp.task('bundle-js-dev', ['build-templates'], function() {
     bundleJS(jsSrcFiles.concat(templateBuildFiles), 'bundle.js', true, true);
-    bundleJS(jsLibs.concat(jsDevLibs), 'libs.js', true, false);
+    bundleJS(jsLibs, 'libs.js', true, false);
 });
 
 gulp.task('bundle-js-prod', ['build-templates'], function() {
