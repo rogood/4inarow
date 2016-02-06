@@ -18,6 +18,10 @@ h1, h2, h3, h4, h5, h6{
 	margin-bottom: 0;
     height: 50px;
     line-height: 50px;
+	.navbar-header{
+		width:100%;
+		margin:0px;
+	}
 	.navbar-brand{
         margin: 9px 6px;
 		font-size: 18px;
@@ -29,6 +33,10 @@ h1, h2, h3, h4, h5, h6{
 		border-color: $navbar-brand-color; 
 		padding: 4px 6px;
 		display:inline-block;
+	}
+	.page-navbar-content{
+		margin-right: 10px;
+		
 	}
 }
 

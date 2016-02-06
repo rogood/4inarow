@@ -8,11 +8,18 @@ angular.module('app', ['ui.router', 'templates'])
 	.state('app', {
         url: "/",
         abstract: true,
-        templateUrl: "layout.html"
+        templateUrl: "layout.html",
+		controller: 'GameController'
     })
 	.state('app.game', {
 		url: "",
-		templateUrl: "game.html",
-		controller: 'GameController'
+		views:{
+			nav:{
+				templateUrl: 'gameNav.html'
+			},
+			main:{
+				templateUrl: "game.html"
+			}
+		}
 	});
 }]);

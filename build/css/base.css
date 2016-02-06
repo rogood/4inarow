@@ -16,6 +16,9 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0;
   height: 50px;
   line-height: 50px; }
+  .navbar .navbar-header {
+    width: 100%;
+    margin: 0px; }
   .navbar .navbar-brand {
     margin: 9px 6px;
     font-size: 18px;
@@ -27,103 +30,11 @@ h1, h2, h3, h4, h5, h6 {
     border-color: #fff;
     padding: 4px 6px;
     display: inline-block; }
+  .navbar .page-navbar-content {
+    margin-right: 10px; }
 
 .page-content {
   padding: 0; }
-
-.disc {
-  -webkit-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -o-border-radius: 50%;
-  border-radius: 50%;
-  -webkit-animation-duration: 1s;
-  -ms-animation-duration: 1s;
-  -moz-animation-duration: 1s;
-  -o-animation-duration: 1s;
-  animation-duration: 1s;
-  height: 85%;
-  width: 85%;
-  margin: auto; }
-  .disc.disc-style-red {
-    background-color: #e63d3d; }
-  .disc.disc-style-yellow {
-    background-color: #e7d242; }
-  .disc.disc-style-lilac {
-    background-color: #e7d2ff; }
-  .disc.disc-style-smiley {
-    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f604.svg"); }
-  .disc.disc-style-rage {
-    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f621.svg"); }
-  .disc.disc-style-thumbsup {
-    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44d.svg"); }
-  .disc.disc-style-thumbsdown {
-    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44e.svg"); }
-  .disc.disc-style-open_hands {
-    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f450.svg"); }
-
-.game-container {
-  margin: 16px 0px; }
-  .game-container table#game-grid {
-    margin: 0 auto;
-    overflow: hidden; }
-    .game-container table#game-grid td, .game-container table#game-grid th {
-      border: 2px solid #304040; }
-    .game-container table#game-grid td {
-      background-color: #fff; }
-  .game-container .drop-button {
-    height: 100%;
-    width: 100%;
-    background-color: #5b7065;
-    border-style: none;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.8); }
-    .game-container .drop-button i {
-      font-size: 6vw; }
-    .game-container .drop-button:hover {
-      color: rgba(255, 255, 255, 0.8);
-      background-color: #517a65; }
-    .game-container .drop-button:active {
-      color: rgba(255, 255, 255, 0.8);
-      background-color: #3d8e64; }
-    .game-container .drop-button:disabled {
-      color: rgba(255, 255, 255, 0.3);
-      background-color: #666666;
-      animation: none; }
-
-.info-bar {
-  background-color: #c9d1c8;
-  padding: 1vh; }
-  .info-bar > div {
-    line-height: 8vh;
-    margin: 1vh 0; }
-  .info-bar .disc {
-    height: 8vh;
-    width: 8vh; }
-  .info-bar .message-bar {
-    color: #04202c;
-    background-color: #f2f4f2;
-    font-size: 18px;
-    text-align: center; }
-  .info-bar .button-container .reset-button {
-    color: #fff;
-    background-color: #5b7065; }
-    .info-bar .button-container .reset-button:hover, .info-bar .button-container .reset-button:active, .info-bar .button-container .reset-button:visited, .info-bar .button-container .reset-button:focus {
-      color: #fff; }
-
-.animated.blink {
-  -webkit-animation: blinker 1s linear 20;
-  -ms-animation: blinker 1s linear 20;
-  -moz-animation: blinker 1s linear 20;
-  -o-animation: blinker 1s linear 20;
-  animation: blinker 1s linear 20; }
-
-.animated.pulse {
-  -webkit-animation: pulse 0.75s linear 3;
-  -ms-animation: pulse 0.75s linear 3;
-  -moz-animation: pulse 0.75s linear 3;
-  -o-animation: pulse 0.75s linear 3;
-  animation: pulse 0.75s linear 3; }
 
 @-webkit-keyframes blinker {
   50% {
@@ -156,3 +67,98 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes pulse {
   50% {
     color: white; } }
+
+.animated.blink {
+  -webkit-animation: blinker 1s linear 20;
+  -ms-animation: blinker 1s linear 20;
+  -moz-animation: blinker 1s linear 20;
+  -o-animation: blinker 1s linear 20;
+  animation: blinker 1s linear 20; }
+
+.animated.pulse {
+  -webkit-animation: pulse 0.75s linear 3;
+  -ms-animation: pulse 0.75s linear 3;
+  -moz-animation: pulse 0.75s linear 3;
+  -o-animation: pulse 0.75s linear 3;
+  animation: pulse 0.75s linear 3; }
+
+.reset-button {
+  color: #fff;
+  background-color: #5b7065; }
+  .reset-button:hover, .reset-button:active, .reset-button:visited, .reset-button:focus {
+    color: #fff; }
+
+.disc {
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-animation-duration: 1s;
+  -ms-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  -o-animation-duration: 1s;
+  animation-duration: 1s;
+  height: 85%;
+  width: 85%;
+  margin: auto; }
+  .disc.disc-style-red {
+    background-color: #e63d3d; }
+  .disc.disc-style-yellow {
+    background-color: #e7d242; }
+  .disc.disc-style-lilac {
+    background-color: #e7d2ff; }
+  .disc.disc-style-smiley {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f604.svg"); }
+  .disc.disc-style-rage {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f621.svg"); }
+  .disc.disc-style-thumbsup {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44d.svg"); }
+  .disc.disc-style-thumbsdown {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f44e.svg"); }
+  .disc.disc-style-open_hands {
+    background-image: url("//cdn.jsdelivr.net/emojione/assets/svg/1f450.svg"); }
+
+.info-bar {
+  background-color: #c9d1c8;
+  padding: 1vh; }
+  .info-bar > div {
+    line-height: 8vh;
+    margin: 1vh 0; }
+  .info-bar .disc {
+    height: 8vh;
+    width: 8vh; }
+  .info-bar .message-bar {
+    color: #04202c;
+    background-color: #f2f4f2;
+    font-size: 18px;
+    text-align: center; }
+
+.game-container {
+  margin: 16px 0px; }
+  .game-container table#game-grid {
+    margin: 0 auto;
+    overflow: hidden; }
+    .game-container table#game-grid td, .game-container table#game-grid th {
+      border: 2px solid #304040; }
+    .game-container table#game-grid td {
+      background-color: #fff; }
+  .game-container .drop-button {
+    height: 100%;
+    width: 100%;
+    background-color: #5b7065;
+    border-style: none;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8); }
+    .game-container .drop-button i {
+      font-size: 6vh; }
+    .game-container .drop-button:hover {
+      color: rgba(255, 255, 255, 0.8);
+      background-color: #517a65; }
+    .game-container .drop-button:active {
+      color: rgba(255, 255, 255, 0.8);
+      background-color: #3d8e64; }
+    .game-container .drop-button:disabled {
+      color: rgba(255, 255, 255, 0.3);
+      background-color: #666666;
+      animation: none; }

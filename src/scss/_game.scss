@@ -7,6 +7,31 @@ $reset-button-color:#5b7065;
 $info-bar-color:#c9d1c8;
 $info-bar-text-color:#04202c;
 
+
+@include keyframes(blinker) {  
+  50% { opacity: 0.0; }
+}
+
+@include keyframes(pulse) {  
+	50% { color: rgba(255, 255, 255, 1); }
+}
+
+.animated.blink {
+ 	@include vendorize(animation, blinker 1s linear 20);
+}
+
+.animated.pulse{
+	@include vendorize(animation, pulse 0.75s linear 3);
+}
+
+.reset-button{
+	color:#fff;
+	background-color:$reset-button-color;
+	&:hover, &:active, &:visited, &:focus{
+		color:#fff;
+	}
+}
+
 .disc{
 	@include vendorize(border-radius, 50%);
 	@include vendorize(animation-duration, 1s);
@@ -39,6 +64,28 @@ $info-bar-text-color:#04202c;
   	}
 }
 
+.info-bar{
+	background-color: $info-bar-color;
+	padding: 1vh;
+	
+	> div{
+		line-height: 8vh;
+		margin: 1vh 0;
+	}
+	
+	.disc{
+		height:8vh;
+		width:8vh;
+	}
+	
+	.message-bar{
+		color: $info-bar-text-color;
+		background-color: lighten( $info-bar-color, 15% );
+		font-size: 18px;
+		text-align: center;
+	}
+}
+
 .game-container{
 	margin:16px 0px;
 	
@@ -61,7 +108,7 @@ $info-bar-text-color:#04202c;
 		margin: 0;
 		color: rgba(255, 255, 255, 0.8);
 		i {
-			font-size:6vw;
+			font-size:6vh;
 		}
 		&:hover{
 			color:rgba(255, 255, 255, 0.8);
@@ -77,52 +124,4 @@ $info-bar-text-color:#04202c;
 			animation: none;
 		}
 	}
-}
-
-.info-bar{
-	background-color: $info-bar-color;
-	padding: 1vh;
-	
-	> div{
-		line-height: 8vh;
-		margin: 1vh 0;
-	}
-	
-	.disc{
-		height:8vh;
-		width:8vh;
-	}
-	
-	.message-bar{
-		color: $info-bar-text-color;
-		background-color: lighten( $info-bar-color, 15% );
-		font-size: 18px;
-		text-align: center;
-	}
-	
-	.button-container{
-		.reset-button{
-			color:#fff;
-			background-color:$reset-button-color;
-			&:hover, &:active, &:visited, &:focus{
-				color:#fff;
-			}
-		}
-	}
-}
-
-.animated.blink {
- 	@include vendorize(animation, blinker 1s linear 20);
-}
-
-.animated.pulse{
-	@include vendorize(animation, pulse 0.75s linear 3);
-}
-
-@include keyframes(blinker) {  
-  50% { opacity: 0.0; }
-}
-
-@include keyframes(pulse) {  
-	50% { color: rgba(255, 255, 255, 1); }
 }
