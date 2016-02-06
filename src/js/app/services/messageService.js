@@ -4,7 +4,7 @@ angular.module('app')
 	var _messages = {
 		"tie" : 
 		{
-			text: "No more moves can be made. It's a tie",
+			text: "It's a tie",
 			cssClass: ""
 		},
 		"youWin" : {

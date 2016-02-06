@@ -100,24 +100,24 @@ angular.module('app')
 	
 	function checkForGameEnd(playerId, moveDelay){
 		
-		if(_gameValidator.checkTie()){
-			_onGameEnd(null);
+		var chains = _gameValidator.checkWinner(playerId);
+		if(chains){
+			markChains(chains);
+			_onGameEnd(_playerCache[playerId], chains);		
 			setCurrentPlayer(null);
 		}
-		else{	
-			var chains = _gameValidator.checkWinner(playerId);
-			if(chains){
-				markChains(chains);
-				_onGameEnd(_playerCache[playerId], chains);		
-				setCurrentPlayer(null);
-			}
-			else{
-				// Timeout to allow for the 1s drop animation
-				_dropTimeout = $timeout(function(){
+		else{
+			// Timeout to allow for the 1s drop animation
+			_dropTimeout = $timeout(function(){
+				if(_gameValidator.isFull()){
+					_onGameEnd(null);
+					setCurrentPlayer(null);
+				}
+				else{
 					toggleCurrentPlayer();
-				}, moveDelay);
-			}
-		}	
+				}
+			}, moveDelay);
+		}
 	}
 	
 	// Negate the id when there is a winning chain

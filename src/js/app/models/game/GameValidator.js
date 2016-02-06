@@ -51,10 +51,10 @@ angular.module('app')
 			}
 		
 			// Check full grid where there is no winner
-			checkTie() {
+			isFull() {
 				var allFull = true;
 
-				for (var i = 0; i < _rowCount; i++) {
+				for (var i = 0; i < _colCount; i++) {
 					allFull = allFull && _grid[i].length >= _rowCount;
 				}
 

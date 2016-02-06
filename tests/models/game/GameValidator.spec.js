@@ -10,7 +10,7 @@ describe('GameValidator', function () {
 
   describe('gameValidator.checkWinner', function () {
     
-    it('player 1 should have a winning horizontal move', function () {
+    it('player 1 should have a winning horizontal chain', function () {
       
       var colCount = 7,
         rowCount = 6,
@@ -39,7 +39,7 @@ describe('GameValidator', function () {
       
     });
     
-    it('player 1 should have a winning vertical move', function () {
+    it('player 1 should have a winning vertical chain', function () {
       
       var colCount = 7,
         rowCount = 6,
@@ -54,7 +54,7 @@ describe('GameValidator', function () {
       
     });
     
-    it('player 1 should have a winning north-east diagonal move', function () {
+    it('player 1 should have a winning north-east diagonal chain', function () {
       
       var colCount = 7,
         rowCount = 6,
@@ -69,7 +69,7 @@ describe('GameValidator', function () {
       
     });
     
-    it('player 1 should have a winning north-west diagonal move', function () {
+    it('player 1 should have a winning north-west diagonal chain', function () {
       
       var colCount = 7,
         rowCount = 6,
@@ -84,7 +84,7 @@ describe('GameValidator', function () {
       
     });
     
-    it('player 1 should have a winning north-west diagonal and horizontal move', function () {
+    it('player 1 should have a winning north-west diagonal and horizontal chain', function () {
       
       var colCount = 7,
         rowCount = 6,
@@ -109,7 +109,43 @@ describe('GameValidator', function () {
       
     });
     
-    it('player 1 should not have a winning move', function () {
+    it('there should be a tie', function () {
+      
+      var colCount = 7,
+        rowCount = 6,
+        winningCount = 4,
+        grid = [
+          [2, 2, 1, 2, 1, 2], 
+          [1, 1, 2, 2, 1, 2], 
+          [2, 1, 2, 1, 2, 1], 
+          [1, 2, 2, 1, 1, 2], 
+          [1, 2, 1, 2, 1, 1], 
+          [1, 2, 2, 1, 2, 1], 
+          [2, 1, 1, 2, 2, 1]
+        ],
+        gameValidator = new GameValidator(grid, colCount, rowCount, winningCount),
+        isFull = gameValidator.isFull(),
+        winningChains = gameValidator.checkWinner(1);
+
+      expect(isFull).toBeTruthy();
+      expect(winningChains).toBeFalsy();
+      
+    });
+    
+    it('the grid should not be full', function () {
+      
+      var colCount = 7,
+        rowCount = 6,
+        winningCount = 4,
+        grid = [[1, 2, 1, 1], [2, 2, 1], [1, 2], [1, 2], [2], [2], []],
+        gameValidator = new GameValidator(grid, colCount, rowCount, winningCount),
+        isFull = gameValidator.isFull();
+
+      expect(isFull).toBeFalsy();
+      
+    });
+    
+    it('player 1 should not have a winning chain', function () {
       
       var colCount = 7,
         rowCount = 6,
