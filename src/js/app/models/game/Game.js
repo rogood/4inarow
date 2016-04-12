@@ -2,7 +2,7 @@ angular.module('app')
 .factory('Game', ['$timeout', 'Grid', 'GameValidator', 
 	function($timeout, Grid, GameValidator)
 {
-	var _currentPlayerId = null,
+	let _currentPlayerId = null,
 		_gameValidator = null,
 		_players = [],
 		_playerCache = {},
@@ -100,7 +100,7 @@ angular.module('app')
 	
 	function checkForGameEnd(playerId, moveDelay){
 		
-		var chains = _gameValidator.checkWinner(playerId);
+		let chains = _gameValidator.checkWinner(playerId);
 		if(chains){
 			markChains(chains);
 			_onGameEnd(_playerCache[playerId], chains);		
@@ -122,10 +122,13 @@ angular.module('app')
 	
 	// Negate the id when there is a winning chain
 	function markChains(chains){
-		for (var c = 0; c < chains.length; c++) {
-			var chain = chains[c].chain;
-			for (var i = 0; i < chain.length; i++) {
-				var cell = _gridObj.grid[chain[i][0]][chain[i][1]];
+		
+		let chain, cell;
+		
+		for (let c = 0; c < chains.length; c++) {
+			chain = chains[c].chain;
+			for (let i = 0; i < chain.length; i++) {
+				cell = _gridObj.grid[chain[i][0]][chain[i][1]];
 				if(cell > 0){
 					_gridObj.grid[chain[i][0]][chain[i][1]] = cell * -1;
 				}
@@ -135,7 +138,7 @@ angular.module('app')
 	
 	function setCurrentPlayer(playerId){
 		
-		var player = _playerCache[playerId];
+		let player = _playerCache[playerId];
 		
 		if(playerId) {		
 			player.onTurnStarted(Game.prototype.makeMove);
@@ -153,7 +156,7 @@ angular.module('app')
 	
 	function getNextPlayer(playerId){
 		
-		var index = _players.indexOf(playerId);
+		let index = _players.indexOf(playerId);
 		
 		return index >= 0 && index < _players.length - 1 ?
 			_players[index + 1] :

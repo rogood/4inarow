@@ -1,6 +1,6 @@
 angular.module('app')
 	.factory('GameValidator', [function () {
-		var _grid, _colCount, _rowCount, _winningCount;
+		let _grid, _colCount, _rowCount, _winningCount;
 
 		class GameValidator {
 
@@ -13,7 +13,7 @@ angular.module('app')
 		
 			// Check if move is a winning one
 			checkWinner(playerId) {
-				var chain, chains = [];
+				let chain, chains = [];
 
 				chain = checkHorizontal(playerId);
 				if (chain) {
@@ -52,9 +52,9 @@ angular.module('app')
 		
 			// Check full grid where there is no winner
 			isFull() {
-				var allFull = true;
+				let allFull = true;
 
-				for (var i = 0; i < _colCount; i++) {
+				for (let i = 0; i < _colCount; i++) {
 					allFull = allFull && _grid[i].length >= _rowCount;
 				}
 
@@ -63,20 +63,20 @@ angular.module('app')
 		
 			// Move Validation
 			isValidMove(currentPlayer, playerId, col) {
-				var isCurrentPlayer = playerId !== null && playerId == currentPlayer;
-				var isValidCol = col > -1 && col < _colCount;
-				var isColNotFull = _grid[col].length < _rowCount;
+				let isCurrentPlayer = playerId !== null && playerId == currentPlayer;
+				let isValidCol = col > -1 && col < _colCount;
+				let isColNotFull = _grid[col].length < _rowCount;
 
 				return isCurrentPlayer && isValidCol && isColNotFull;
 			}
 		}
 
 		function checkHorizontal(playerId) {
-			var chain = [];
+			let chain = [];
 
-			for (var r = 0; r < _rowCount; r++) {
+			for (let r = 0; r < _rowCount; r++) {
 				chain.length = 0;
-				for (var c = 0; c < _colCount; c++) {
+				for (let c = 0; c < _colCount; c++) {
 					if(setChain(chain, c, r, playerId)){
 						break;
 					}
@@ -91,10 +91,10 @@ angular.module('app')
 		}
 
 		function checkVertical(playerId) {
-			var chain = [];
-			for (var c = 0; c < _colCount; c++) {
+			let chain = [];
+			for (let c = 0; c < _colCount; c++) {
 				chain.length = 0;
-				for (var r = 0; r < _grid[c].length; r++) {
+				for (let r = 0; r < _grid[c].length; r++) {
 					if(setChain(chain, c, r, playerId)){
 						break;
 					}
@@ -110,9 +110,9 @@ angular.module('app')
 
 		function checkDiagonalNE(playerId) {
 			
-			var currCol, currRow, chain = [];
+			let currCol, currRow, chain = [];
 
-			for (var r = 0; r < _rowCount; r++) {
+			for (let r = 0; r < _rowCount; r++) {
 				currCol = 0;
 				currRow = r;
 				chain.length = 0;
@@ -132,7 +132,7 @@ angular.module('app')
 			}
 
 			if (chain.length < _winningCount) {
-				for (var c = 0; c < _colCount; c++) {
+				for (let c = 0; c < _colCount; c++) {
 					currCol = c;
 					currRow = 0;
 					chain.length = 0;
@@ -157,9 +157,9 @@ angular.module('app')
 
 		function checkDiagonalNW(playerId) {
 			
-			var currCol, currRow, chain = [];
+			let currCol, currRow, chain = [];
 
-			for (var c = 0; c < _colCount; c++) {
+			for (let c = 0; c < _colCount; c++) {
 				currCol = c;
 				currRow = 0;
 				chain.length = 0;
@@ -179,7 +179,7 @@ angular.module('app')
 			}
 
 			if (chain.length < _winningCount) {
-				for (var r = 0; r < _rowCount; r++) {
+				for (let r = 0; r < _rowCount; r++) {
 					currCol = _colCount - 1;
 					currRow = r;
 					chain.length = 0;

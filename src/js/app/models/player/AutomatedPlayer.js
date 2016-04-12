@@ -14,8 +14,8 @@ angular.module('app')
 		}
 		
 		onTurnStarted(){
-			var self = this;
-			var thinkingTime = this.delayMin + Math.floor(Math.random() * this.delayMax);
+			const self = this;
+			const thinkingTime = this.delayMin + Math.floor(Math.random() * this.delayMax);
 	
 			$timeout(function()
 			{
@@ -28,7 +28,7 @@ angular.module('app')
 	// Private Functions
 	function makeAutomatedMove(game, id)
 	{
-		var col;
+		let col;
 		
 		do{
 			col = calculateMove(game.colCount);
@@ -40,8 +40,8 @@ angular.module('app')
 	// This is the place to insert more intelligent logic later on.
 	function calculateMove(colCount)
 	{
-		var min = 0;
-		var max = colCount - 1;
+		const min = 0;
+		const max = colCount - 1;
 		
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}

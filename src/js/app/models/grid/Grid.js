@@ -12,13 +12,13 @@ angular.module('app')
 			this.colCount = colCount;
 			
 			this.grid = [];
-			for (var i = 0; i < this.colCount; i++) {
+			for (let i = 0; i < this.colCount; i++) {
 				this.grid.push([]);
 			}
 		}
 		
 		reset(){
-			for (var i = 0; i < this.colCount; i++) {
+			for (let i = 0; i < this.colCount; i++) {
 				this.grid[i].length = 0;
 			}
 		}

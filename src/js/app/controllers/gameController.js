@@ -2,8 +2,7 @@ angular.module('app')
 .controller('GameController', ['$scope', '$timeout', 'Game', 'HumanPlayer', 'AutomatedPlayer', 'messageService',
 	function($scope, $timeout, Game, HumanPlayer, AutomatedPlayer, messageService)
 {
-	var i,
-		_game = new Game({ moveDelay: 1000, rowCount: 6, colCount: 7, winningCount: 4 }),
+	let _game = new Game({ moveDelay: 1000, rowCount: 6, colCount: 7, winningCount: 4 }),
 		_messages = messageService.getMessages();	
 	
 	// Initialise scope variables
@@ -16,11 +15,11 @@ angular.module('app')
 	$scope.getGrid = _game.getGrid;
 	$scope.message = {};
 	
-	for (i = _game.colCount - 1; i >= 0; i--) {
+	for (let i = _game.colCount - 1; i >= 0; i--) {
 		$scope.colIndices.unshift(i);
 	}
 
-	for (i = _game.rowCount - 1; i >= 0; i--) {
+	for (let i = _game.rowCount - 1; i >= 0; i--) {
 		$scope.rowIndices.push(i);
 	}
 	
@@ -78,12 +77,11 @@ angular.module('app')
 	// This resizes the grid so that is appears as large as possible while still keeping square cells.
 	function resizeGame(){
 		$timeout(function(){
-			var gridBodyElem = document.getElementById("game-grid"),
+			let gridBodyElem = document.getElementById("game-grid"),
 				cellElems = gridBodyElem.querySelectorAll('th, td'),
 				containerWidth = document.body.clientWidth - 10,
 				containerHeight = document.body.clientHeight - gridBodyElem.getBoundingClientRect().top - 25,
-				cellSize,
-				i;
+				cellSize;
 			
 			if(containerWidth < containerHeight){
 				cellSize = containerWidth / _game.colCount;		
@@ -92,7 +90,7 @@ angular.module('app')
 				cellSize = containerHeight / (_game.rowCount + 1);
 			}
 			
-			for (i = 0; i < cellElems.length; i++){
+			for (let i = 0; i < cellElems.length; i++){
 				cellElems[i].style.width = 
 					cellElems[i].style.height = 
 						cellSize + "px";

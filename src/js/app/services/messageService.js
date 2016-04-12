@@ -1,7 +1,7 @@
 angular.module('app')
 .factory('messageService', [function()
 {
-	var _messages = {
+	let _messages = {
 		"tie" : 
 		{
 			text: "It's a tie",
