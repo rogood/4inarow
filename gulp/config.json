@@ -1,6 +1,10 @@
 {
   "scss": {
-    "files":  "./src/scss/**/*.scss",
+    "files": ["./src/scss/**/*.scss"],
+    "libs": [
+      "./node_modules/bootstrap/dist/css/bootstrap.css",
+      "./node_modules/animate.css/animate.css"
+    ],
     "folder": {
       "dest": "./dist"
     }
@@ -11,33 +15,32 @@
       "./src/app/**/*.js",
       "!./src/app/**/*.spec.js"
     ],
+    "libs": [
+      "./node_modules/angular/angular.js",
+      "./node_modules/angular-ui-router/release/angular-ui-router.js",
+      "./node_modules/jquery/dist/jquery.js",
+      "./node_modules/bootstrap/dist/js/bootstrap.js"
+    ],
     "bundle": "app.js",
     "folder": {
       "dest": "./dist"
     }
   },
   "html": {
-    "files":  "./src/app/**/*.html",
+    "files": "./src/app/**/*.html",
     "folder": {
       "dest": "./dist"
-    }
-  },
-  "img": {
-    "files": "./src/images/**",
-    "folder": {
-      "dest": "./dist/images"
     }
   },
   "test": {
     "config": "../../../karma.conf.js",
     "files": [
-        "node_modules/angular/angular.js", 
-        "node_modules/angular-ui-router/release/angular-ui-router.js", 
-        "node_modules/angular-mocks/angular-mocks.js",
-        "dist/app.js",
-        "dist/templates.js",
-        "src/app/**/*.spec.js"
-      ]
+      "node_modules/angular/angular.js",
+      "node_modules/angular-ui-router/release/angular-ui-router.js",
+      "node_modules/angular-mocks/angular-mocks.js",
+      "dist/app.js",
+      "dist/templates.js",
+      "src/app/**/*.spec.js"
+    ]
   }
 }
-

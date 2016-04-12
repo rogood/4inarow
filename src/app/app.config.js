@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	angular.module('app', ['ui.router', 'templates'])
+	angular.module('app')
 		.config(config);
 
 	function config($stateProvider, $urlRouterProvider) {
@@ -15,18 +15,20 @@
 			.state('app', {
 				url: "/",
 				abstract: true,
-				templateUrl: "layout.html",
-				controller: 'GameController',
-				controllerAs: 'vm'
+				templateUrl: "layout.html"
 			})
 			.state('app.game', {
 				url: "",
 				views: {
 					nav: {
-						templateUrl: 'gameNav.html'
+						templateUrl: 'nav/nav.html',
+						controller: 'NavController',
+						controllerAs: 'vm'
 					},
 					main: {
-						templateUrl: "game.html"
+						templateUrl: "game/game.html",
+						controller: 'GameController',
+						controllerAs: 'vm'
 					}
 				}
 			});

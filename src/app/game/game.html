@@ -1,0 +1,41 @@
+<div>
+    <div class="info-bar row">
+        <div class="col-xs-2">
+            <div class="disc {{vm.infoBarIcon}}"></div>
+        </div>
+        <div class="col-xs-10">
+            <div class="message-bar">
+                <span>{{vm.message.text}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row game-container">
+        <div class="col-xs-12">
+            <table id="game-grid">
+                <thead>
+                    <tr>
+                        <th ng-repeat="colNo in vm.colIndices">
+                            <button class="drop-button animated pulse" 
+                                ng-disabled="!vm.getCurrentPlayer() || !vm.getCurrentPlayer().isUser" 
+                                ng-click="vm.getCurrentPlayer().makeMove(colNo)">
+                                <i class="fa fa-arrow-circle-o-down"></i>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rowNo in vm.rowIndices">
+                        <td ng-repeat="colNo in vm.colIndices">
+                            <div class="disc {{vm.playerCache[vm.getGrid()[colNo][rowNo]].discStyle}} animated bounceInDown" 
+                                ng-if="vm.getGrid()[colNo][rowNo] > 0">
+                            </div>
+                            <div class="disc {{vm.playerCache[vm.getGrid()[colNo][rowNo] * -1].discStyle}} animated blink" 
+                                ng-if="vm.getGrid()[colNo][rowNo] < 0">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

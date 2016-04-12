@@ -20,7 +20,6 @@
 
 		vm.getCurrentPlayer = _game.getCurrentPlayer;
 		vm.getGrid = _game.getGrid;
-		vm.resetGame = _game.reset;
 		
 		activate();
 
@@ -30,6 +29,8 @@
 			_game.registerPlayer(new AutomatedPlayer(2, "rage"));
 			//_game.registerPlayer(new AutomatedPlayer(3, "red"));
 			
+			setEventHandlers();
+			setIndices();
 			resizeGame();
 
 			_game.start();
@@ -39,15 +40,15 @@
 			_game.onGameEnd(function (winningPlayer, chains) {
 
 				if (!winningPlayer) {
-					vm.message = _messages["tie"];
+					vm.message = _messages.tie;
 					vm.infoBarIcon = "disc-style-open_hands";
 				}
 				else if (winningPlayer.isUser) {
-					vm.message = _messages["youWin"];
+					vm.message = _messages.youWin;
 					vm.infoBarIcon = "disc-style-thumbsup";
 				}
 				else {
-					vm.message = _messages["youLose"];
+					vm.message = _messages.youLose;
 					vm.infoBarIcon = "disc-style-thumbsdown";
 				}
 
@@ -56,7 +57,7 @@
 			_game.onIllegalMove(function (player) {
 
 				if (player.isUser) {
-					vm.message = _messages["cannotMove"];
+					vm.message = _messages.cannotMove;
 				}
 
 			});
@@ -64,8 +65,8 @@
 			_game.onPlayerChange(function (player) {
 
 				if (player) {
-					_messages["playerMove"].setMessage(player);
-					vm.message = _messages["playerMove"];
+					_messages.playerMove.setMessage(player);
+					vm.message = _messages.playerMove;
 
 					vm.infoBarIcon = player.discStyle;
 				}
@@ -108,5 +109,5 @@
 			});
 		}
 
-	};
+	}
 })();
