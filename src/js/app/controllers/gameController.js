@@ -5,81 +5,84 @@
 	angular.module('app')
 		.controller('GameController', GameController);
 
-	function GameController($scope, $timeout, Game, HumanPlayer, AutomatedPlayer, messageService) {
+	function GameController($timeout, Game, HumanPlayer, AutomatedPlayer, messageService) {
 
 		'ngInject';
 
 		let _game = new Game({ moveDelay: 1000, rowCount: 6, colCount: 7, winningCount: 4 }),
-			_messages = messageService.getMessages();	
-	
-		// Initialise scope variables
-		$scope.colIndices = [];
-		$scope.rowIndices = [];
-	
-		// These scope variables are set to functions in order to capture 
-		// internal changes to the properties
-		$scope.getCurrentPlayer = _game.getCurrentPlayer;
-		$scope.getGrid = _game.getGrid;
-		$scope.message = {};
+			_messages = messageService.getMessages();
 
-		for (let i = _game.colCount - 1; i >= 0; i--) {
-			$scope.colIndices.unshift(i);
+		let vm = this;
+		vm.colIndices = [];
+		vm.rowIndices = [];
+		vm.message = {};
+		vm.playerCache = _game.getPlayerCache();
+
+		vm.getCurrentPlayer = _game.getCurrentPlayer;
+		vm.getGrid = _game.getGrid;
+		vm.resetGame = _game.reset;
+		
+		activate();
+
+		function activate() {
+			
+			_game.registerPlayer(new HumanPlayer(1, "smiley", { isUser: true }));
+			_game.registerPlayer(new AutomatedPlayer(2, "rage"));
+			//_game.registerPlayer(new AutomatedPlayer(3, "red"));
+			
+			resizeGame();
+
+			_game.start();
 		}
 
-		for (let i = _game.rowCount - 1; i >= 0; i--) {
-			$scope.rowIndices.push(i);
+		function setEventHandlers() {
+			_game.onGameEnd(function (winningPlayer, chains) {
+
+				if (!winningPlayer) {
+					vm.message = _messages["tie"];
+					vm.infoBarIcon = "disc-style-open_hands";
+				}
+				else if (winningPlayer.isUser) {
+					vm.message = _messages["youWin"];
+					vm.infoBarIcon = "disc-style-thumbsup";
+				}
+				else {
+					vm.message = _messages["youLose"];
+					vm.infoBarIcon = "disc-style-thumbsdown";
+				}
+
+			});
+
+			_game.onIllegalMove(function (player) {
+
+				if (player.isUser) {
+					vm.message = _messages["cannotMove"];
+				}
+
+			});
+
+			_game.onPlayerChange(function (player) {
+
+				if (player) {
+					_messages["playerMove"].setMessage(player);
+					vm.message = _messages["playerMove"];
+
+					vm.infoBarIcon = player.discStyle;
+				}
+
+			});
 		}
 
-		$scope.resetGame = function () {
-			_game.reset();
-		};
-	
-		// Setting up the game
-		_game.registerPlayer(new HumanPlayer(1, "smiley", { isUser: true }));
-		_game.registerPlayer(new AutomatedPlayer(2, "rage"));
-		//_game.registerPlayer(new AutomatedPlayer(3, "red"));
-	
-		$scope.playerCache = _game.getPlayerCache();
-
-		_game.onGameEnd(function (winningPlayer, chains) {
-
-			if (!winningPlayer) {
-				$scope.message = _messages["tie"];
-				$scope.infoBarIcon = "disc-style-open_hands";
-			}
-			else if (winningPlayer.isUser) {
-				$scope.message = _messages["youWin"];
-				$scope.infoBarIcon = "disc-style-thumbsup";
-			}
-			else {
-				$scope.message = _messages["youLose"];
-				$scope.infoBarIcon = "disc-style-thumbsdown";
+		function setIndices() {
+			for (let i = _game.colCount - 1; i >= 0; i--) {
+				vm.colIndices.unshift(i);
 			}
 
-		});
-
-		_game.onIllegalMove(function (player) {
-
-			if (player.isUser) {
-				$scope.message = _messages["cannotMove"];
+			for (let i = _game.rowCount - 1; i >= 0; i--) {
+				vm.rowIndices.push(i);
 			}
 
-		});
-
-		_game.onPlayerChange(function (player) {
-
-			if (player) {
-				_messages["playerMove"].setMessage(player);
-				$scope.message = _messages["playerMove"];
-
-				$scope.infoBarIcon = player.discStyle;
-			}
-
-		});
-
-		resizeGame();
-
-		_game.start();
+		}
 	
 		// This resizes the grid so that is appears as large as possible while still keeping square cells.
 		function resizeGame() {

@@ -16,7 +16,8 @@
 				url: "/",
 				abstract: true,
 				templateUrl: "layout.html",
-				controller: 'GameController'
+				controller: 'GameController',
+				controllerAs: 'vm'
 			})
 			.state('app.game', {
 				url: "",
