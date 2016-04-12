@@ -1,24 +1,33 @@
-angular.module('app')
-.factory('Player', [function()
-{
-	class Player{
+(function () {
+
+	'use strict';
+
+	angular.module('app')
+		.factory('Player', Player);
+
+	function Player() {
 		
-		constructor(id, discStyle, { isUser = false, isAutomated = true} = {}) {
-			this.id = id;
-			this.isUser = isUser;
-			this.isAutomated = isAutomated;
-			this.game = null;
-			this.discStyle = "disc-style-" + discStyle;
+		'ngInject';
+		
+		class Player {
+
+			constructor(id, discStyle, { isUser = false, isAutomated = true} = {}) {
+				this.id = id;
+				this.isUser = isUser;
+				this.isAutomated = isAutomated;
+				this.game = null;
+				this.discStyle = "disc-style-" + discStyle;
+			}
+
+			setGame(game) {
+				this.game = game;
+			}
+
+			onTurnStarted() { }
+			makeMove(col) { }
 		}
-		
-		setGame(game){
-			this.game = game;
-		}
-		
-		onTurnStarted(){}
-		makeMove(col){}
-	}
-	
-	return Player;
-	
-}]);
+
+		return Player;
+	};
+
+})();

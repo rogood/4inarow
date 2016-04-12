@@ -1,5 +1,14 @@
-angular.module('app')
-	.factory('GameValidator', [function () {
+(function () {
+
+	'use strict';
+
+	angular.module('app')
+		.factory('GameValidator', GameValidator);
+
+	function GameValidator() {
+		
+		'ngInject';
+		
 		let _grid, _colCount, _rowCount, _winningCount;
 
 		class GameValidator {
@@ -77,7 +86,7 @@ angular.module('app')
 			for (let r = 0; r < _rowCount; r++) {
 				chain.length = 0;
 				for (let c = 0; c < _colCount; c++) {
-					if(setChain(chain, c, r, playerId)){
+					if (setChain(chain, c, r, playerId)) {
 						break;
 					}
 				}
@@ -95,7 +104,7 @@ angular.module('app')
 			for (let c = 0; c < _colCount; c++) {
 				chain.length = 0;
 				for (let r = 0; r < _grid[c].length; r++) {
-					if(setChain(chain, c, r, playerId)){
+					if (setChain(chain, c, r, playerId)) {
 						break;
 					}
 				}
@@ -109,7 +118,7 @@ angular.module('app')
 		}
 
 		function checkDiagonalNE(playerId) {
-			
+
 			let currCol, currRow, chain = [];
 
 			for (let r = 0; r < _rowCount; r++) {
@@ -118,7 +127,7 @@ angular.module('app')
 				chain.length = 0;
 
 				while (currCol < _colCount && currRow < _rowCount) {
-					if(setChain(chain, currCol, currRow, playerId)){
+					if (setChain(chain, currCol, currRow, playerId)) {
 						break;
 					}
 
@@ -138,7 +147,7 @@ angular.module('app')
 					chain.length = 0;
 
 					while (currCol < _colCount && currRow < _rowCount) {
-						if(setChain(chain, currCol, currRow, playerId)){
+						if (setChain(chain, currCol, currRow, playerId)) {
 							break;
 						}
 
@@ -156,7 +165,7 @@ angular.module('app')
 		}
 
 		function checkDiagonalNW(playerId) {
-			
+
 			let currCol, currRow, chain = [];
 
 			for (let c = 0; c < _colCount; c++) {
@@ -165,7 +174,7 @@ angular.module('app')
 				chain.length = 0;
 
 				while (currCol >= 0 && currRow < _rowCount) {
-					if(setChain(chain, currCol, currRow, playerId)){
+					if (setChain(chain, currCol, currRow, playerId)) {
 						break;
 					}
 
@@ -185,7 +194,7 @@ angular.module('app')
 					chain.length = 0;
 
 					while (currCol >= 0 && currRow < _rowCount) {
-						if(setChain(chain, currCol, currRow, playerId)){
+						if (setChain(chain, currCol, currRow, playerId)) {
 							break;
 						}
 
@@ -219,4 +228,6 @@ angular.module('app')
 
 		return GameValidator;
 
-	}]);
+	}
+
+})();

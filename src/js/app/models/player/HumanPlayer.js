@@ -1,17 +1,26 @@
-angular.module('app')
-.factory('HumanPlayer', ['Player', function(Player)
-{
-	class HumanPlayer extends Player{
+(function () {
+
+	'use strict';
+
+	angular.module('app')
+		.factory('HumanPlayer', HumanPlayer);
+
+	function HumanPlayer(Player) {
 		
-		constructor(id, discStyle, { isUser = false } = {}) {
-			super(id, discStyle, { isUser : isUser, isAutomated: false });
-		}
+		'ngInject';
 		
-		makeMove(col){
-			this.game.makeMove(this.id, col);
+		class HumanPlayer extends Player {
+
+			constructor(id, discStyle, { isUser = false } = {}) {
+				super(id, discStyle, { isUser: isUser, isAutomated: false });
+			}
+
+			makeMove(col) {
+				this.game.makeMove(this.id, col);
+			}
 		}
-	}
-	
-	return HumanPlayer;
-	
-}]);
+
+		return HumanPlayer;
+	};
+
+})();

@@ -1,0 +1,43 @@
+{
+  "scss": {
+    "files":  "./src/scss/**/*.scss",
+    "folder": {
+      "dest": "./dist"
+    }
+  },
+  "js": {
+    "files": [
+      "./src/app/app.module.js",
+      "./src/app/**/*.js",
+      "!./src/app/**/*.spec.js"
+    ],
+    "bundle": "app.js",
+    "folder": {
+      "dest": "./dist"
+    }
+  },
+  "html": {
+    "files":  "./src/app/**/*.html",
+    "folder": {
+      "dest": "./dist"
+    }
+  },
+  "img": {
+    "files": "./src/images/**",
+    "folder": {
+      "dest": "./dist/images"
+    }
+  },
+  "test": {
+    "config": "../../../karma.conf.js",
+    "files": [
+        "node_modules/angular/angular.js", 
+        "node_modules/angular-ui-router/release/angular-ui-router.js", 
+        "node_modules/angular-mocks/angular-mocks.js",
+        "dist/app.js",
+        "dist/templates.js",
+        "src/app/**/*.spec.js"
+      ]
+  }
+}
+

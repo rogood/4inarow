@@ -1,25 +1,34 @@
-angular.module('app', ['ui.router', 'templates'])		
-.config(['$stateProvider', '$urlRouterProvider',
-	function($stateProvider, $urlRouterProvider) {
+(function () {
 
-	$urlRouterProvider.otherwise("/");
+	'use strict';
 
-	$stateProvider
-	.state('app', {
-        url: "/",
-        abstract: true,
-        templateUrl: "layout.html",
-		controller: 'GameController'
-    })
-	.state('app.game', {
-		url: "",
-		views:{
-			nav:{
-				templateUrl: 'gameNav.html'
-			},
-			main:{
-				templateUrl: "game.html"
-			}
-		}
-	});
-}]);
+	angular.module('app', ['ui.router', 'templates'])
+		.config(config);
+
+	function config($stateProvider, $urlRouterProvider) {
+
+		'ngInject';
+
+		$urlRouterProvider.otherwise("/");
+
+		$stateProvider
+			.state('app', {
+				url: "/",
+				abstract: true,
+				templateUrl: "layout.html",
+				controller: 'GameController'
+			})
+			.state('app.game', {
+				url: "",
+				views: {
+					nav: {
+						templateUrl: 'gameNav.html'
+					},
+					main: {
+						templateUrl: "game.html"
+					}
+				}
+			});
+	}
+
+})();
