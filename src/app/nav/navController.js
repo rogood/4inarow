@@ -13,7 +13,7 @@
 		vm.onNewGameClicked = onNewGameClicked;
 		
 		function onNewGameClicked(){
-			$state.go("app.game", null, { reload: true });
+			$state.transitionTo($state.current, {}, { reload: true, inherit: false, notify: true });
 		}
 		
 	}
