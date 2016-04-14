@@ -14,7 +14,7 @@ describe('GameController', function () {
       var $scope = {},
         controller = $controller('GameController', { $scope: $scope });
 
-      expect($scope.getCurrentPlayer().id).toBe(1);
+      expect(controller.getCurrentPlayer().id).toBe(1);
 
     });
 
@@ -24,8 +24,8 @@ describe('GameController', function () {
         controller = $controller('GameController', { $scope: $scope }),
         col = 3;
 
-      $scope.getCurrentPlayer().makeMove(3);
-      expect($scope.getGrid()[col][0]).toBe(1);
+      controller.getCurrentPlayer().makeMove(3);
+      expect(controller.getGrid()[col][0]).toBe(1);
 
     });
 

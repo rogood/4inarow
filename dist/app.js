@@ -43,6 +43,77 @@
 })();
 'use strict';
 
+(function () {
+
+	'use strict';
+
+	angular.module('app').controller('GameController', GameController);
+
+	function GameController($timeout, Game, HumanPlayer, AutomatedPlayer, gameService) {
+
+		'ngInject';
+
+		var vm = this;
+
+		vm.colIndices = [];
+		vm.rowIndices = [];
+		vm.infoBar = {
+			icon: null,
+			message: {
+				text: null,
+				cssClass: null
+			}
+		};
+		vm.playerCache = function () {};
+		vm.getCurrentPlayer = function () {};
+		vm.getGrid = function () {};
+
+		activate();
+
+		function activate() {
+
+			gameService.init({
+				onPlayerChange: onPlayerChange,
+				onIllegalMove: onIllegalMove,
+				onGameEnd: onGameEnd
+			});
+
+			vm.colIndices = gameService.getColIndices();
+			vm.rowIndices = gameService.getRowIndices();
+
+			var game = gameService.getGame();
+
+			vm.playerCache = game.getPlayerCache();
+			vm.getCurrentPlayer = game.getCurrentPlayer;
+			vm.getGrid = game.getGrid;
+
+			resizeGame();
+
+			game.start();
+		}
+
+		function onPlayerChange(player) {
+			gameService.setInfoBarOnPlayerChange(vm.infoBar, player);
+		}
+
+		function onIllegalMove(player) {
+			gameService.setInfoBarOnIllegalMove(vm.infoBar, player);
+		}
+
+		function onGameEnd(winningPlayer) {
+			gameService.setInfoBarOnGameEnd(vm.infoBar, winningPlayer);
+		}
+
+		// This resizes the grid so that is appears as large as possible while still keeping square cells.
+		function resizeGame() {
+			$timeout(function () {
+				gameService.resizeGame();
+			});
+		}
+	}
+})();
+'use strict';
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -241,101 +312,118 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 	'use strict';
 
-	angular.module('app').controller('GameController', GameController);
+	angular.module('app').service('gameService', gameService);
 
-	function GameController($timeout, Game, HumanPlayer, AutomatedPlayer, messageService) {
+	function gameService($timeout, Game, HumanPlayer, AutomatedPlayer, messageService) {
 
 		'ngInject';
 
-		var _game = new Game({ moveDelay: 1000, rowCount: 6, colCount: 7, winningCount: 4 }),
-		    _messages = messageService.getMessages();
+		var _game = undefined;
+		var _messages = messageService.getMessages();
 
-		var vm = this;
-		vm.colIndices = [];
-		vm.rowIndices = [];
-		vm.message = {};
-		vm.playerCache = _game.getPlayerCache();
+		var gameService = {
+			getColIndices: getColIndices,
+			getGame: getGame,
+			getRowIndices: getRowIndices,
+			init: init,
+			resizeGame: resizeGame,
+			setInfoBarOnGameEnd: setInfoBarOnGameEnd,
+			setInfoBarOnIllegalMove: setInfoBarOnIllegalMove,
+			setInfoBarOnPlayerChange: setInfoBarOnPlayerChange
+		};
 
-		vm.getCurrentPlayer = _game.getCurrentPlayer;
-		vm.getGrid = _game.getGrid;
+		return gameService;
 
-		activate();
+		function init(options) {
 
-		function activate() {
+			if (_game) {
+				_game.reset();
+			}
+
+			_game = new Game({ moveDelay: 1000, rowCount: 6, colCount: 7, winningCount: 4 });
 
 			_game.registerPlayer(new HumanPlayer(1, "smiley", { isUser: true }));
 			_game.registerPlayer(new AutomatedPlayer(2, "rage"));
 			//_game.registerPlayer(new AutomatedPlayer(3, "red"));
 
-			setEventHandlers();
-			setIndices();
-			resizeGame();
-
-			_game.start();
+			_game.onGameEnd(options.onGameEnd);
+			_game.onIllegalMove(options.onIllegalMove);
+			_game.onPlayerChange(options.onPlayerChange);
 		}
 
-		function setEventHandlers() {
-			_game.onGameEnd(function (winningPlayer, chains) {
-
-				if (!winningPlayer) {
-					vm.message = _messages.tie;
-					vm.infoBarIcon = "disc-style-open_hands";
-				} else if (winningPlayer.isUser) {
-					vm.message = _messages.youWin;
-					vm.infoBarIcon = "disc-style-thumbsup";
-				} else {
-					vm.message = _messages.youLose;
-					vm.infoBarIcon = "disc-style-thumbsdown";
-				}
-			});
-
-			_game.onIllegalMove(function (player) {
-
-				if (player.isUser) {
-					vm.message = _messages.cannotMove;
-				}
-			});
-
-			_game.onPlayerChange(function (player) {
-
-				if (player) {
-					_messages.playerMove.setMessage(player);
-					vm.message = _messages.playerMove;
-
-					vm.infoBarIcon = player.discStyle;
-				}
-			});
+		function getGame() {
+			return _game;
 		}
 
-		function setIndices() {
+		function getColIndices() {
+
+			var colIndices = [];
+
 			for (var i = _game.colCount - 1; i >= 0; i--) {
-				vm.colIndices.unshift(i);
+				colIndices.unshift(i);
 			}
+
+			return colIndices;
+		}
+
+		function getRowIndices() {
+
+			var rowIndices = [];
 
 			for (var i = _game.rowCount - 1; i >= 0; i--) {
-				vm.rowIndices.push(i);
+				rowIndices.push(i);
+			}
+
+			return rowIndices;
+		}
+
+		function resizeGame() {
+			var gridBodyElem = document.getElementById("game-grid"),
+			    cellElems = gridBodyElem.querySelectorAll('th, td'),
+			    containerWidth = document.body.clientWidth - 10,
+			    containerHeight = document.body.clientHeight - gridBodyElem.getBoundingClientRect().top - 25,
+			    cellSize = undefined;
+
+			if (containerWidth < containerHeight) {
+				cellSize = containerWidth / _game.colCount;
+			} else {
+				cellSize = containerHeight / (_game.rowCount + 1);
+			}
+
+			for (var i = 0; i < cellElems.length; i++) {
+				cellElems[i].style.width = cellElems[i].style.height = cellSize + "px";
 			}
 		}
 
-		// This resizes the grid so that is appears as large as possible while still keeping square cells.
-		function resizeGame() {
-			$timeout(function () {
-				var gridBodyElem = document.getElementById("game-grid"),
-				    cellElems = gridBodyElem.querySelectorAll('th, td'),
-				    containerWidth = document.body.clientWidth - 10,
-				    containerHeight = document.body.clientHeight - gridBodyElem.getBoundingClientRect().top - 25,
-				    cellSize = undefined;
+		function setInfoBarOnPlayerChange(infoBar, player) {
+			if (player) {
 
-				if (containerWidth < containerHeight) {
-					cellSize = containerWidth / _game.colCount;
-				} else {
-					cellSize = containerHeight / (_game.rowCount + 1);
-				}
+				_messages.playerMove.setMessage(player);
 
-				for (var i = 0; i < cellElems.length; i++) {
-					cellElems[i].style.width = cellElems[i].style.height = cellSize + "px";
-				}
-			});
+				infoBar.message = _messages.playerMove;
+				infoBar.icon = player.discStyle;
+			}
+		}
+
+		function setInfoBarOnIllegalMove(infoBar, player) {
+
+			if (player.isUser) {
+				infoBar.message = _messages.cannotMove;
+			}
+		}
+
+		function setInfoBarOnGameEnd(infoBar, winningPlayer) {
+
+			if (!winningPlayer) {
+				infoBar.message = _messages.tie;
+				infoBar.icon = "disc-style-open_hands";
+			} else if (winningPlayer.isUser) {
+				infoBar.message = _messages.youWin;
+				infoBar.icon = "disc-style-thumbsup";
+			} else {
+				infoBar.message = _messages.youLose;
+				infoBar.icon = "disc-style-thumbsdown";
+			}
 		}
 	}
 })();

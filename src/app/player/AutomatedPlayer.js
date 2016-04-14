@@ -6,9 +6,9 @@
 		.factory('AutomatedPlayer', AutomatedPlayer);
 
 	function AutomatedPlayer($timeout, Player) {
-		
+
 		'ngInject';
-		
+
 		class AutomatedPlayer extends Player {
 
 			constructor(id, discStyle, {
@@ -28,7 +28,7 @@
 				$timeout(function () {
 					makeAutomatedMove(self.game, self.id);
 				},
-					thinkingTime);
+				thinkingTime);
 			}
 		}
 	
